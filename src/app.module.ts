@@ -8,7 +8,7 @@ import { envValidate } from './utils/envValidator';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      ignoreEnvFile: true,
+      ignoreEnvFile: false,
       isGlobal: true,
       validate: envValidate,
     }),
