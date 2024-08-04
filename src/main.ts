@@ -6,6 +6,7 @@ async function bootstrap() {
     logger: ['debug', 'error', 'log', 'warn'],
   });
   const httpAdapter = app.get(HttpAdapterHost);
+  app.setGlobalPrefix('event/api/v1');
   const PORT_NUMBER = app.get(ConfigService).get('PORT');
   await app.listen(PORT_NUMBER, () => {
     console.log(`Server Listening At Port`);
