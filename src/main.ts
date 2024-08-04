@@ -20,16 +20,16 @@ async function bootstrap() {
       exceptionFactory: errorMessageExtract,
     }),
   );
+  const PORT_NUMBER = await app.get(ConfigService).get('PORT');
   const config = new DocumentBuilder()
     .setTitle('Social Media Platform For Events.')
     .setDescription('Social Media Platform For Events Backend Service.')
     .setVersion('1.0')
-    .addTag('Authentication & Authorization')
+    // .addTag('Authentication')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  const PORT_NUMBER = app.get(ConfigService).get('PORT');
   await app.listen(PORT_NUMBER, () => {
     console.log(`Server Listening At Port ${PORT_NUMBER}`);
   });
