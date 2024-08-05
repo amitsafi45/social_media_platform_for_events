@@ -2,12 +2,13 @@ import {
   Body,
   Controller,
   HttpCode,
+  HttpException,
   HttpStatus,
   Post,
   Res,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   DatabaseQueryFailedResponseDTO,
   ErrorResponseDTO,
@@ -15,12 +16,17 @@ import {
 } from '../dtos/response.dto';
 import { RegistrationDTO } from 'src/dtos/user.dto';
 import { UserService } from 'src/services/user.service';
+import { AuthService } from 'src/services/auth.service';
 
 @Controller('auth')
 @ApiTags('Auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
   @Post('/sign-up')
+  @ApiOperation({ summary: 'Register a new user' })
   @ApiBody({ type: RegistrationDTO })
   @ApiResponse({
     status: 201,
@@ -43,6 +49,12 @@ export class AuthController {
   ): Promise<
     SuccessResponseDTO | ErrorResponseDTO | DatabaseQueryFailedResponseDTO
   > {
+    const isUserExist = await this.userService.getByEmail(body.email);
+    if (isUserExist) {
+      throw new HttpException('User Already Exist', HttpStatus.BAD_REQUEST);
+    }
+    body.password = await this.authService.hashPassword(body.password);
+
     await this.userService.createUser(body);
     return {
       statusCode: HttpStatus.CREATED,
