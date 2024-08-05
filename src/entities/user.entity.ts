@@ -12,16 +12,21 @@ import { TokenEntity } from './token.entity';
 import { ProfileMediaEntity } from './profileMedia.entity';
 import { FollowUserEntity } from './followUser.entity';
 import { BaseEntity } from './base.entity';
+import { CharacterLength } from 'src/constants/enum';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: CharacterLength.ONE_HUNDRED })
   name: string;
 
-  @Column({ unique: true, type: 'varchar', length: 100 })
+  @Column({
+    unique: true,
+    type: 'varchar',
+    length: CharacterLength.ONE_HUNDRED,
+  })
   email: string;
 
-  @Column({ type: 'varchar', length: 255 }) // Changed to varchar for hashed password
+  @Column({ type: 'varchar', length: CharacterLength.TWO_HUNDRED_FIFTY_FIVE }) // Changed to varchar for hashed password
   password: string;
 
   @OneToMany(() => EventEntity, (event) => event.creator)
