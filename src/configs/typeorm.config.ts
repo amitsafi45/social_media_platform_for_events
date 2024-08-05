@@ -12,7 +12,7 @@ export const typeOrmConfig = (
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
-  entities: [__dirname + '/../entities/*.entity{.ts,.js}'],
+  entities: [join(__dirname, '/../entities/*.entity{.ts,.js}')],
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
   logging: configService.get<boolean>('DB_LOGGING', false),
   migrations: [join(__dirname, '/..', 'migrations/*{.ts,.js}')],
