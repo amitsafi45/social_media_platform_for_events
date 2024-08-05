@@ -13,7 +13,13 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
+    "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
+    "typeorm": "ts-node --require tsconfig-paths/register ./node_modules/typeorm/cli",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/configs/dataSource.config.ts",
+    "migration:generate": "npm run typeorm -- -d ./src/configs/dataSource.config.ts migration:generate ./src/migrations/$npm_config_name",
+    "migration:create": "npm run typeorm -- migration:create ./src/migrations/$npm_config_name",
+    "migration:revert": "npm run typeorm -- -d ./src/configs/dataSource.config.ts migration:revert",
+    "migration:show": "npm run typeorm -- migration:show -d ./src/configs/dataSource.config.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -21,6 +27,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^7.4.0",
+    "@nestjs/typeorm": "^10.0.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "pg": "^8.12.0",
