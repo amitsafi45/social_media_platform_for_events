@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -20,13 +21,15 @@ export class RegistrationDTO {
   name: string;
 
   @ApiProperty({
-    description: 'The email address of the user',
+    description:
+      'This value is case-insensitive and will be converted to lowercase before validation.',
     example: 'john.doe@example.com',
     maxLength: CharacterLength.ONE_HUNDRED,
   })
   @IsNotEmpty()
   @IsEmail()
   @MaxLength(CharacterLength.ONE_HUNDRED)
+  @Transform(({ value }) => value.toLowerCase())
   email: string;
 
   @ApiProperty({
