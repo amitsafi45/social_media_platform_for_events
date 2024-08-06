@@ -15,7 +15,7 @@ export class SuccessResponseDTO {
 
   @ApiProperty({
     description: 'Success message',
-    example: 'User registered successfully',
+    example: 'Task done successfully',
   })
   message: string;
 }

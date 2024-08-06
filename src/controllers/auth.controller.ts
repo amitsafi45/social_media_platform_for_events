@@ -20,6 +20,7 @@ import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from 'src/services/token.service';
+import { SignInResponseDTO } from 'src/dtos/signInResponse.dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -74,14 +75,14 @@ export class AuthController {
   @ApiResponse({
     status: HttpStatus.ACCEPTED,
     description: 'User sign-in successfully',
-    type: SuccessResponseDTO,
+    type: SignInResponseDTO,
   })
   @ApiResponse({
     type: ErrorResponseDTO,
     status: HttpStatus.BAD_REQUEST,
     description: 'Invalid input data',
   })
-  async signIn(@Body() body: SignInDTO) {
+  async signIn(@Body() body: SignInDTO): Promise<SignInResponseDTO> {
     const isUserExist = await this.userService.getByEmail(body.email);
     if (
       isUserExist &&
