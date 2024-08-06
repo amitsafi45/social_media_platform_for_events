@@ -8,18 +8,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { CharacterLength } from 'src/constants/enum';
-
-export class RegistrationDTO {
-  @ApiProperty({
-    description: 'The name of the user',
-    example: 'John Doe',
-    maxLength: CharacterLength.ONE_HUNDRED,
-  })
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(CharacterLength.ONE_HUNDRED)
-  name: string;
-
+export class CommonDTO {
   @ApiProperty({
     description:
       'This value is case-insensitive and will be converted to lowercase before validation.',
@@ -46,4 +35,17 @@ export class RegistrationDTO {
     minUppercase: 1,
   })
   password: string;
+}
+export class SignInDTO extends CommonDTO {}
+
+export class RegistrationDTO extends CommonDTO {
+  @ApiProperty({
+    description: 'The name of the user',
+    example: 'John Doe',
+    maxLength: CharacterLength.ONE_HUNDRED,
+  })
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(CharacterLength.ONE_HUNDRED)
+  name: string;
 }

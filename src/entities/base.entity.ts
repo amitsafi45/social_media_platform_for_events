@@ -14,6 +14,7 @@ export abstract class BaseEntity {
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
+    select: false,
   })
   createdAt: Date;
 
@@ -22,6 +23,7 @@ export abstract class BaseEntity {
     type: 'timestamp',
     nullable: true,
     default: null,
+    select: false,
   })
   updatedAt: Date;
 
@@ -30,6 +32,7 @@ export abstract class BaseEntity {
     type: 'timestamp',
     nullable: true,
     default: null,
+    select: false,
   })
   deletedAt: Date;
 }
