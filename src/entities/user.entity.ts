@@ -38,7 +38,7 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => LikeEntity, (like) => like.user)
   likes: LikeEntity[];
 
-  @OneToMany(() => TokenEntity, (token) => token.user)
+  @OneToMany(() => TokenEntity, (token) => token.user, { cascade: true })
   tokens: TokenEntity[];
 
   @OneToOne(() => ProfileMediaEntity, (media) => media.user)

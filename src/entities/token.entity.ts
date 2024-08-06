@@ -25,7 +25,7 @@ export class TokenEntity {
   })
   createdAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.tokens)
+  @ManyToOne(() => UserEntity, (user) => user.tokens, { onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'user_id',
   })

@@ -70,3 +70,10 @@ export class SignInResponseDTO extends SuccessResponseDTO {
   })
   data: UserDataDTO;
 }
+
+export class RefreshTokenDTO {
+  @ApiProperty({
+    description: 'access & refresh token generate by refresh-token',
+  })
+  token: string;
+}

@@ -20,7 +20,8 @@ import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from 'src/services/token.service';
-import { SignInResponseDTO } from 'src/dtos/signInResponse.dto';
+import { RefreshTokenDTO, SignInResponseDTO } from 'src/dtos/auth.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -30,6 +31,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
     private readonly tokenService: TokenService,
+    private readonly configService: ConfigService,
   ) {}
   @Post('/sign-up')
   @ApiOperation({ summary: 'Register a new user' })
@@ -112,5 +114,43 @@ export class AuthController {
     } else {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @Post('/refresh')
+  async refreshToken(@Body() body: RefreshTokenDTO, @Req() req) {
+    const refreshSecretKey = await this.configService.get('REFRESH_SECRET_KEY');
+    let user;
+    try {
+      user = await this.authService.verifyToken(body.token, refreshSecretKey);
+    } catch (error) {
+      throw new HttpException('Invalid Token', HttpStatus.BAD_REQUEST);
+    }
+    const isTokenExist = await this.tokenService.getByTokenAndUserId(
+      body.token,
+      user.id,
+    );
+    if (!isTokenExist) {
+      throw new HttpException('Invalid Token', HttpStatus.BAD_REQUEST);
+    }
+    const payload = { id: user.id, email: user.email, name: user.name };
+    const token = await this.authService.tokenGenerator(payload);
+    const accessExpiresIn = await this.jwtService.decode(token.access);
+    const refreshExpiresIn = await this.jwtService.decode(token.refresh);
+    await this.tokenService.create(token.refresh, user.id.id);
+    await this.tokenService.deleteById(isTokenExist.id);
+
+    return {
+      statusCode: HttpStatus.ACCEPTED,
+      success: true,
+      message: 'User sign-in successfully',
+      data: {
+        ...payload,
+        token: token,
+        expire: {
+          accessIn: accessExpiresIn.exp,
+          refreshIn: refreshExpiresIn.exp,
+        },
+      },
+    };
   }
 }

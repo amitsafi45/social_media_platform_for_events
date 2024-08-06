@@ -47,4 +47,10 @@ export class AuthService {
       ),
     };
   }
+
+  async verifyToken(token: string, secretKey: string) {
+    return await this.jwtService.verifyAsync(token, {
+      secret: secretKey,
+    });
+  }
 }
