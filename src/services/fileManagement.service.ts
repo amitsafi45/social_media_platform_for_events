@@ -6,23 +6,31 @@ import { Environment } from 'src/constants/enum';
 
 @Injectable()
 export class FileManagementService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {
+    this.createPublicFolderIfNotExist();
+  }
+
+  private createPublicFolderIfNotExist(): void {
+    const publicPath = this.getFolderPath('public');
+    if (!fs.existsSync(publicPath)) {
+      fs.mkdirSync(publicPath, { recursive: true });
+    }
+  }
 
   private getFolderPath(folder: string): string {
-    const isProduction =
-      this.configService.get('ENVIRONMENT') === Environment.Production;
-    if (isProduction) {
-      return resolve(process.cwd(), 'public', folder);
-    }
-    return join(__dirname, '..', '..', 'public', folder);
+    return resolve(process.cwd(), folder);
   }
 
   getUploadFolderPath(): string {
-    return this.getFolderPath('uploads');
+    return resolve(process.cwd(), 'public', 'upload');
   }
 
   getTempFolderPath(): string {
-    return this.getFolderPath('temp');
+    const path = join(this.getFolderPath('public'), 'temp');
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path, { recursive: true });
+    }
+    return path;
   }
 
   createFolderIfNotExistInUploadsFolder(subFolderName: string): void {

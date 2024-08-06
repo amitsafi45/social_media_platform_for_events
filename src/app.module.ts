@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
+import { MediaModule } from './modules/media.module';
 
 @Module({
   imports: [
@@ -31,9 +32,9 @@ import { AuthenticationMiddleware } from './middlewares/authentication.middlewar
       inject: [ConfigService],
     }),
     AuthModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule{
-}
+export class AppModule {}

@@ -25,7 +25,10 @@ async function bootstrap() {
     .setTitle('Social Media Platform For Events.')
     .setDescription('Social Media Platform For Events Backend Service.')
     .setVersion('1.0')
-    // .addTag('Authentication')
+    .addBearerAuth(
+      { type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' },
+      'access-token',
+    )
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
