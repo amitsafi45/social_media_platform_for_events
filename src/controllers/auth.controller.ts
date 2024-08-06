@@ -75,7 +75,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Sign-In user' })
   @ApiBody({ type: SignInDTO })
   @ApiResponse({
-    status: HttpStatus.ACCEPTED,
+    status: HttpStatus.CREATED,
     description: 'User sign-in successfully',
     type: SignInResponseDTO,
   })
@@ -84,7 +84,7 @@ export class AuthController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Invalid input data',
   })
-  async signIn(@Body() body: SignInDTO): Promise<SignInResponseDTO> {
+  async signIn(@Body() body: SignInDTO) {
     const isUserExist = await this.userService.getByEmail(body.email);
     if (
       isUserExist &&
@@ -94,30 +94,31 @@ export class AuthController {
       ))
     ) {
       const { password, ...rest } = isUserExist;
-      const token = await this.authService.tokenGenerator(rest);
-      const accessExpiresIn = await this.jwtService.decode(token.access);
-      const refreshExpiresIn = await this.jwtService.decode(token.refresh);
-      await this.tokenService.create(token.refresh, isUserExist.id);
-      return {
-        statusCode: HttpStatus.ACCEPTED,
-        success: true,
-        message: 'User sign-in successfully',
-        data: {
-          ...rest,
-          token: token,
-          expire: {
-            accessIn: accessExpiresIn.exp,
-            refreshIn: refreshExpiresIn.exp,
-          },
-        },
-      };
+      const response = await this.prepareResponse(rest);
+      response['message'] = 'User sign-in successfully';
+      return response;
     } else {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     }
   }
 
   @Post('/refresh')
-  async refreshToken(@Body() body: RefreshTokenDTO, @Req() req) {
+  @ApiOperation({ summary: 'Refresh JWT tokens' })
+  @ApiBody({ type: RefreshTokenDTO })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Token refreshed successfully',
+    type: SignInResponseDTO,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Invalid token',
+    type: ErrorResponseDTO,
+  })
+  async refreshToken(
+    @Body() body: RefreshTokenDTO,
+    @Req() req,
+  ): Promise<SignInResponseDTO> {
     const refreshSecretKey = await this.configService.get('REFRESH_SECRET_KEY');
     let user;
     try {
@@ -132,17 +133,23 @@ export class AuthController {
     if (!isTokenExist) {
       throw new HttpException('Invalid Token', HttpStatus.BAD_REQUEST);
     }
-    const payload = { id: user.id, email: user.email, name: user.name };
+    const payload = { id: user.sub, email: user.email, name: user.name };
+
+    const response = await this.prepareResponse(payload);
+    await this.tokenService.deleteById(isTokenExist.id);
+    response['message'] = 'Token Refresh successfully';
+    return response;
+  }
+
+  async prepareResponse(payload): Promise<SignInResponseDTO> {
     const token = await this.authService.tokenGenerator(payload);
     const accessExpiresIn = await this.jwtService.decode(token.access);
     const refreshExpiresIn = await this.jwtService.decode(token.refresh);
-    await this.tokenService.create(token.refresh, user.id.id);
-    await this.tokenService.deleteById(isTokenExist.id);
-
+    await this.tokenService.create(token.refresh, payload.sub);
     return {
-      statusCode: HttpStatus.ACCEPTED,
+      statusCode: HttpStatus.CREATED,
       success: true,
-      message: 'User sign-in successfully',
+      message: '',
       data: {
         ...payload,
         token: token,

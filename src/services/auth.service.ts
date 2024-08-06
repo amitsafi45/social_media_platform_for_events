@@ -29,6 +29,7 @@ export class AuthService {
         {
           sub: payload.id,
           email: payload.email,
+          name: payload.name,
         },
         {
           secret: this.configService.get('ACCESS_SECRET_KEY'),
@@ -39,6 +40,7 @@ export class AuthService {
         {
           sub: payload.id,
           email: payload.email,
+          name: payload.name,
         },
         {
           secret: this.configService.get('REFRESH_SECRET_KEY'),
