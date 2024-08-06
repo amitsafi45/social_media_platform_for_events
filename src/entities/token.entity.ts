@@ -29,5 +29,5 @@ export class TokenEntity {
   @JoinColumn({
     name: 'user_id',
   })
-  user: UserEntity;
+  user: UserEntity | string;
 }

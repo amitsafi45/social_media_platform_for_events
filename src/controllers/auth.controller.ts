@@ -19,6 +19,7 @@ import { RegistrationDTO, SignInDTO } from 'src/dtos/user.dto';
 import { UserService } from 'src/services/user.service';
 import { AuthService } from 'src/services/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { TokenService } from 'src/services/token.service';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -27,6 +28,7 @@ export class AuthController {
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
+    private readonly tokenService: TokenService,
   ) {}
   @Post('/sign-up')
   @ApiOperation({ summary: 'Register a new user' })
@@ -92,6 +94,7 @@ export class AuthController {
       const token = await this.authService.tokenGenerator(rest);
       const accessExpiresIn = await this.jwtService.decode(token.access);
       const refreshExpiresIn = await this.jwtService.decode(token.refresh);
+      await this.tokenService.create(token.refresh, isUserExist.id);
       return {
         statusCode: HttpStatus.ACCEPTED,
         success: true,
