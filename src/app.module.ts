@@ -11,6 +11,7 @@ import { AuthModule } from '@modules/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { MediaModule } from '@modules/media.module';
 import { EventModule } from '@modules/event.module';
+import { UserModule } from '@modules/user.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { EventModule } from '@modules/event.module';
     }),
     AuthModule,
     MediaModule,
-    EventModule
+    EventModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService

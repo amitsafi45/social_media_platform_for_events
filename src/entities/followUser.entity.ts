@@ -16,11 +16,11 @@ export class FollowUserEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.following, { nullable: false })
   @JoinColumn({ name: 'user_id' })
-  followUser: UserEntity;
+  followUser: UserEntity | string ;
 
   @ManyToOne(() => UserEntity, (user) => user.followedBy, { nullable: false })
   @JoinColumn({ name: 'followed_by_id' })
-  followedBy: UserEntity;
+  followedBy: UserEntity | string ;
 
   @CreateDateColumn({
     name: 'created_at',
