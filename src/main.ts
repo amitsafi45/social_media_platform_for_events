@@ -5,13 +5,15 @@ import { GlobalErrorHandlingFilter } from '@utils/globalErrorHandling.filter';
 import { ValidationPipe } from '@nestjs/common';
 import { errorMessageExtract } from '@utils/errorMessageExtract';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { TransactionInterceptor } from '@utils/transaction.interceptor';
+import dataSource from '@configs/dataSource.config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
-  const httpAdapter = app.get(HttpAdapterHost);
+  app.useGlobalInterceptors(new TransactionInterceptor(dataSource));
+  const httpAdapter = app.get(HttpAdapterHost);  app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.setGlobalPrefix('social-platform/api/v1');
-  app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.useGlobalPipes(
     new ValidationPipe({
       stopAtFirstError: true,
