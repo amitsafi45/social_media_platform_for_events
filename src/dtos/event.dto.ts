@@ -1,4 +1,4 @@
-import { ApiProperty, ApiConsumes } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
@@ -10,12 +10,11 @@ import {
 } from 'class-validator';
 import { CharacterLength, EventCategory } from '@constants/enum';
 
-// @ApiConsumes()
 export class EventDTO {
   @ApiProperty({
     description: 'The title of the event',
     maxLength: CharacterLength.ONE_HUNDRED,
-    example: 'Annual Meeting',
+    example: 'Jazz Music Concert',
   })
   @IsNotEmpty()
   @IsString()
@@ -25,8 +24,7 @@ export class EventDTO {
   @ApiProperty({
     description: 'A detailed description of the event',
     maxLength: CharacterLength.FIVE_HUNDRED,
-    example:
-      'This event is held annually to discuss company achievements and future plans.',
+    example: 'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
   })
   @IsNotEmpty()
   @IsString()
@@ -38,7 +36,7 @@ export class EventDTO {
     required: false,
     type: String,
     format: 'date-time',
-    example: '2024-08-07T10:30:00Z',
+    example: '2024-08-07T18:30:00Z',
   })
   @IsOptional()
   @IsDateString()
@@ -57,7 +55,7 @@ export class EventDTO {
     description: 'The location of the event',
     required: false,
     maxLength: CharacterLength.TWO_HUNDRED,
-    example: '123 Main Street, New York, NY',
+    example: '123 Jazz Street, New York, NY',
   })
   @IsOptional()
   @IsString()
@@ -72,5 +70,5 @@ export class EventDTO {
   })
   @IsOptional()
   @IsEnum(EventCategory)
-  category: string | null;
+  category: EventCategory | null;
 }
