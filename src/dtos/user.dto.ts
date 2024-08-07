@@ -7,7 +7,7 @@ import {
   IsStrongPassword,
   MaxLength,
 } from 'class-validator';
-import { CharacterLength } from 'src/constants/enum';
+import { CharacterLength } from '@constants/enum';
 export class CommonDTO {
   @ApiProperty({
     description:

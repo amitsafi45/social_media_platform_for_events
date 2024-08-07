@@ -1,6 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
-import { EnvironmentVariablesDTO } from 'src/dtos/environmentVariables.dto';
+import { EnvironmentVariablesDTO } from '../dtos/environmentVariables.dto';
 
 export function envValidate(config: Record<string, unknown>) {
   const validatedConfig = plainToInstance(EnvironmentVariablesDTO, config, {

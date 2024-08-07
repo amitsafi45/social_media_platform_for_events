@@ -18,4 +18,5 @@ export enum CharacterLength {
   ONE_HUNDRED = 100,
   TWO_HUNDRED = 200,
   TWO_HUNDRED_FIFTY_FIVE = 255,
+  FIVE_HUNDRED = 500,
 }

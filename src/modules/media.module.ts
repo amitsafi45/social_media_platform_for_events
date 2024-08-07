@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { MediaController } from 'src/controllers/media.controller';
-import { AuthenticationMiddleware } from 'src/middlewares/authentication.middleware';
-import { FileManagementService } from 'src/services/fileManagement.service';
+import { MediaController } from '@controllers/media.controller';
+import { AuthenticationMiddleware } from '@middlewares/authentication.middleware';
+import { FileManagementService } from '@services/fileManagement.service';
 
 @Module({
   imports: [],

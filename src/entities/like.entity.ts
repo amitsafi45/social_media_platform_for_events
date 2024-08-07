@@ -6,8 +6,8 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { EventEntity } from './event.entity';
+import { UserEntity } from '@entities/user.entity';
+import { EventEntity } from '@entities/event.entity';
 
 @Entity('like')
 @Unique(['user', 'event'])

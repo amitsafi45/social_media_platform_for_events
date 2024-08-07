@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, Unique } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { UserEntity } from './user.entity';
-import { CharacterLength } from 'src/constants/enum';
+import { BaseEntity } from '@entities/base.entity';
+import { UserEntity } from '@entities/user.entity';
+import { CharacterLength } from '@constants/enum';
 
 @Entity('profile_media')
 @Unique(['user'])

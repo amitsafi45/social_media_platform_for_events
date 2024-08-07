@@ -8,7 +8,7 @@ import {
   Matches,
   Length,
 } from 'class-validator';
-import { Environment } from 'src/constants/enum';
+import { Environment } from '../constants/enum';
 
 export class EnvironmentVariablesDTO {
   @IsNumber()

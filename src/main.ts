@@ -1,16 +1,16 @@
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { GlobalErrorHandlingFilter } from './utils/globalErrorHandling.filter';
+import { GlobalErrorHandlingFilter } from '@utils/globalErrorHandling.filter';
 import { ValidationPipe } from '@nestjs/common';
-import { errorMessageExtract } from './utils/errorMessageExtract';
+import { errorMessageExtract } from '@utils/errorMessageExtract';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
   const httpAdapter = app.get(HttpAdapterHost);
-  app.setGlobalPrefix('event/api/v1');
+  app.setGlobalPrefix('social-platform/api/v1');
   app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.useGlobalPipes(
     new ValidationPipe({
@@ -20,6 +20,7 @@ async function bootstrap() {
       exceptionFactory: errorMessageExtract,
     }),
   );
+  console.log(process.cwd(),"LL")
   const PORT_NUMBER = await app.get(ConfigService).get('PORT');
   const config = new DocumentBuilder()
     .setTitle('Social Media Platform For Events.')

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { join, resolve } from 'path';
 import * as fs from 'fs';
-import { Environment } from 'src/constants/enum';
 
 @Injectable()
 export class FileManagementService {

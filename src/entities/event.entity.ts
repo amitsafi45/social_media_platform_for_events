@@ -14,10 +14,10 @@ export class EventEntity extends BaseEntity {
   @Column({ name: 'description', type: 'varchar', length: 500 })
   description: string;
 
-  @Column({ name: 'date', type: 'date', nullable: true, default: null })
+  @Column({ name: 'date', type: 'date', nullable: true })
   date: Date;
 
-  @Column({ name: 'time', type: 'time', nullable: true, default: null })
+  @Column({ name: 'time', type: 'time', nullable: true })
   time: string | null;
 
   @Column({
@@ -25,7 +25,6 @@ export class EventEntity extends BaseEntity {
     type: 'varchar',
     length: 200,
     nullable: true,
-    default: null,
   })
   location: string | null;
 
@@ -34,7 +33,6 @@ export class EventEntity extends BaseEntity {
     type: 'enum',
     nullable: true,
     enum: EventCategory,
-    default: null,
   })
   category: string | null;
 

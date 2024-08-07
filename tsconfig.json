@@ -9,13 +9,27 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "rootDir": "./src",
+    "paths": {
+      "@modules/*": ["modules/*"],
+      "@dtos/*": ["dtos/*"],
+      "@utils/*": ["utils/*"],
+      "@configs/*":["configs/*"],
+      "@controllers/*": ["controllers/*"],
+      "@services/*": ["services/*"],
+      "@constants/*": ["constants/*"],
+      "@entities/*":["entities/*"],
+      "@middlewares/*":["middlewares/*"],
+    },
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

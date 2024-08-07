@@ -5,14 +5,14 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { EventEntity } from './event.entity';
-import { CommentEntity } from './comment.entity';
-import { LikeEntity } from './like.entity';
-import { TokenEntity } from './token.entity';
-import { ProfileMediaEntity } from './profileMedia.entity';
-import { FollowUserEntity } from './followUser.entity';
-import { BaseEntity } from './base.entity';
-import { CharacterLength } from 'src/constants/enum';
+import { EventEntity } from '@entities/event.entity';
+import { CommentEntity } from '@entities/comment.entity';
+import { LikeEntity } from '@entities/like.entity';
+import { TokenEntity } from '@entities/token.entity';
+import { ProfileMediaEntity } from '@entities/profileMedia.entity';
+import { FollowUserEntity } from '@entities/followUser.entity';
+import { BaseEntity } from '@entities/base.entity';
+import { CharacterLength } from '@constants/enum';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {

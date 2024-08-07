@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { EventEntity } from './event.entity';
-import { UserEntity } from './user.entity';
+import { BaseEntity } from '@entities/base.entity';
+import { EventEntity } from '@entities/event.entity';
+import { UserEntity } from '@entities/user.entity';
 
 @Entity('comment')
 export class CommentEntity extends BaseEntity {

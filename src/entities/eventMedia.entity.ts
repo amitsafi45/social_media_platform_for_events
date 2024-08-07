@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import { EventEntity } from './event.entity';
-import { CharacterLength } from 'src/constants/enum';
+import { BaseEntity } from '@entities/base.entity';
+import { EventEntity } from '@entities/event.entity';
+import { CharacterLength } from '@constants/enum';
 
 @Entity('event_media')
 export class EventMediaEntity extends BaseEntity {

@@ -8,11 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { FileManagementService } from '../services/fileManagement.service';
+import { FileManagementService } from '@services/fileManagement.service';
 import { randomBytes } from 'crypto';
 import * as fs from 'fs';
 import { isEnum, isNotEmpty } from 'class-validator';
-import { MediaType } from 'src/constants/enum';
+import { MediaType } from '@constants/enum';
 import {
   ApiTags,
   ApiOperation,

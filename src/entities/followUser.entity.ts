@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { UserEntity } from '@entities/user.entity';
 
 @Entity('follow_user')
 @Unique(['followUser', 'followedBy'])

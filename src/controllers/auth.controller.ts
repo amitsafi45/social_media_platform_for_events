@@ -15,12 +15,12 @@ import {
   ErrorResponseDTO,
   SuccessResponseDTO,
 } from '../dtos/response.dto';
-import { RegistrationDTO, SignInDTO } from 'src/dtos/user.dto';
-import { UserService } from 'src/services/user.service';
-import { AuthService } from 'src/services/auth.service';
+import { RegistrationDTO, SignInDTO } from '@dtos/user.dto';
+import { UserService } from '@services/user.service';
+import { AuthService } from '@services/auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { TokenService } from 'src/services/token.service';
-import { RefreshTokenDTO, SignInResponseDTO } from 'src/dtos/auth.dto';
+import { TokenService } from '@services/token.service';
+import { RefreshTokenDTO, SignInResponseDTO } from '@dtos/auth.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')

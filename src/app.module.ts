@@ -8,12 +8,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { envValidate } from './utils/envValidator';
-import { typeOrmConfig } from './configs/typeorm.config';
+import { typeOrmConfig } from '@configs/typeorm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './modules/auth.module';
+import { AuthModule } from '@modules/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthenticationMiddleware } from './middlewares/authentication.middleware';
-import { MediaModule } from './modules/media.module';
+import { MediaModule } from '@modules/media.module';
+import { EventModule } from '@modules/event.module';
 
 @Module({
   imports: [
@@ -33,6 +33,7 @@ import { MediaModule } from './modules/media.module';
     }),
     AuthModule,
     MediaModule,
+    EventModule
   ],
   controllers: [AppController],
   providers: [AppService],
