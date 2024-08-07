@@ -6,13 +6,14 @@ import * as fs from 'fs';
 @Injectable()
 export class FileManagementService {
   constructor(private readonly configService: ConfigService) {
-    this.createPublicFolderIfNotExist();
+    this.ensureFolderExists('public');
+    this.ensureFolderExists('public/temp');
   }
 
-  private createPublicFolderIfNotExist(): void {
-    const publicPath = this.getFolderPath('public');
-    if (!fs.existsSync(publicPath)) {
-      fs.mkdirSync(publicPath, { recursive: true });
+  private ensureFolderExists(relativePath: string): void {
+    const fullPath = this.getFolderPath(relativePath);
+    if (!fs.existsSync(fullPath)) {
+      fs.mkdirSync(fullPath, { recursive: true });
     }
   }
 
@@ -21,15 +22,13 @@ export class FileManagementService {
   }
 
   getUploadFolderPath(): string {
-    return resolve(process.cwd(), 'public', 'upload');
+    const uploadPath = join(this.getFolderPath('public'), 'upload');
+    this.ensureFolderExists('public/upload');
+    return uploadPath;
   }
 
   getTempFolderPath(): string {
-    const path = join(this.getFolderPath('public'), 'temp');
-    if (!fs.existsSync(path)) {
-      fs.mkdirSync(path, { recursive: true });
-    }
-    return path;
+    return join(this.getFolderPath('public'), 'temp');
   }
 
   createFolderIfNotExistInUploadsFolder(subFolderName: string): void {

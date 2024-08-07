@@ -21,6 +21,7 @@ import {
   ApiBody,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { join } from 'path';
 
 const IMAGE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
 const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -98,9 +99,9 @@ export class MediaController {
 
     const fileName = this.generateFileName(file.originalname);
 
-    const tempFolderPath = this.fileManagementService.getTempFolderPath();
-    const tempFilePath = `${tempFolderPath}/${fileName}`;
-    await fs.promises.writeFile(tempFilePath, file.buffer);
+    const tempFolderPath =  this.fileManagementService.getTempFolderPath();
+    const tempFilePath = join(tempFolderPath, fileName);
+    // await fs.promises.writeFile(tempFilePath, file.buffer);
 
     return {
       name: fileName,
