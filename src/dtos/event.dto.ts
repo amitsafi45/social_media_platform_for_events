@@ -3,12 +3,18 @@ import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
+  IsNotEmptyObject,
   IsOptional,
   IsString,
   IsTimeZone,
+  Matches,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
 import { CharacterLength, EventCategory } from '@constants/enum';
+import { MediaDTO } from './media.dto';
+import { Type } from 'class-transformer';
+import { SuccessResponseDTO } from './response.dto';
 
 export class EventDTO {
   @ApiProperty({
@@ -43,12 +49,14 @@ export class EventDTO {
   date: Date;
 
   @ApiProperty({
-    description: 'The time of the event in a specific time zone',
+    description: 'The time of the event',
     required: false,
-    example: 'America/New_York',
+    example: '3:00 PM',
   })
   @IsOptional()
-  @IsTimeZone()
+  @Matches(/^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i, {
+    message: 'time must be in the format hh:mm AM/PM',
+  })
   time: string | null;
 
   @ApiProperty({
@@ -71,4 +79,18 @@ export class EventDTO {
   @IsOptional()
   @IsEnum(EventCategory)
   category: EventCategory | null;
+
+  @ApiProperty({
+    description: 'Media details associated with the event',
+    type: MediaDTO,
+    required: false,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => MediaDTO)
+  media?: MediaDTO;
+
+  
+  creator:string
 }
+

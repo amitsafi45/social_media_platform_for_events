@@ -1,8 +1,5 @@
 import {
-  MiddlewareConsumer,
   Module,
-  NestModule,
-  RequestMethod,
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -36,6 +33,7 @@ import { EventModule } from '@modules/event.module';
     EventModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService
+  ],
 })
 export class AppModule {}

@@ -10,5 +10,5 @@ export class EventMediaEntity extends BaseEntity {
 
   @ManyToOne(() => EventEntity, (event) => event.eventMedia)
   @JoinColumn({ name: 'event_id' })
-  event: EventEntity;
+  event: EventEntity | string ;
 }

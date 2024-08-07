@@ -28,6 +28,7 @@
       "@constants/*": ["constants/*"],
       "@entities/*":["entities/*"],
       "@middlewares/*":["middlewares/*"],
+      "@repository/*":["repository/*"],
     },
   },
   "include": ["src/**/*.ts"],

@@ -38,7 +38,7 @@ export class EventEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, (creator) => creator.events)
   @JoinColumn({ name: 'creator_id' })
-  creator: UserEntity;
+  creator: UserEntity | string;
 
   @OneToMany(() => CommentEntity, (comment) => comment.event)
   comments: CommentEntity[];
