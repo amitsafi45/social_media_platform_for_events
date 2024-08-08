@@ -1,6 +1,4 @@
-import {
-  Module,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -32,10 +30,9 @@ import { UserModule } from '@modules/user.module';
     AuthModule,
     MediaModule,
     EventModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

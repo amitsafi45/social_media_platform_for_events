@@ -99,7 +99,7 @@ export class MediaController {
 
     const fileName = this.generateFileName(file.originalname);
 
-    const tempFolderPath =  this.fileManagementService.getTempFolderPath();
+    const tempFolderPath = this.fileManagementService.getTempFolderPath();
     const tempFilePath = join(tempFolderPath, fileName);
     // await fs.promises.writeFile(tempFilePath, file.buffer);
 

@@ -17,11 +17,11 @@ export class EventLikeEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.eventLikes)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity | string ;
+  user: UserEntity | string;
 
   @ManyToOne(() => EventEntity, (event) => event.eventLikes)
   @JoinColumn({ name: 'event_id' })
-  event: EventEntity | string ;
+  event: EventEntity | string;
 
   @CreateDateColumn({
     name: 'created_at',

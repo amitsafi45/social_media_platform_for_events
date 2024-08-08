@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
-  const httpAdapter = app.get(HttpAdapterHost);  
+  const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.setGlobalPrefix('social-platform/api/v1');
   app.useGlobalPipes(

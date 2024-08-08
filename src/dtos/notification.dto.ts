@@ -8,7 +8,7 @@ export class CreateNotificationDTO {
   })
   @IsNotEmpty()
   @IsUUID()
-  sender: string ;
+  sender: string;
 
   @ApiProperty({
     description: 'UUID of the user receiving the notification',

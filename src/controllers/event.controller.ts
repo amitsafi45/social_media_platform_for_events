@@ -1,5 +1,12 @@
-import { Body, Controller, HttpStatus, Post, Req, UseInterceptors } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  HttpStatus,
+  Post,
+  Req,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventDTO } from '@dtos/event.dto';
 import { EventService } from '@services/event.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
@@ -12,6 +19,7 @@ import dataSource from '@configs/dataSource.config';
 export class EventController {
   constructor(private eventService: EventService) {}
   @Post('/')
+  @ApiOperation({ summary: 'create a new Event' })
   @ApiBody({
     description: 'Event data to create a new event',
     type: EventDTO,
@@ -29,18 +37,18 @@ export class EventController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Internal server error.',
   })
+  
   @UseInterceptors(new TransactionInterceptor(dataSource))
-  async create(@Body() body: EventDTO, @Req() req):Promise<SuccessResponseDTO> {
-    body.creator=req.user.sub
-    await this.eventService.create(body)
+  async create(
+    @Body() body: EventDTO,
+    @Req() req,
+  ): Promise<SuccessResponseDTO> {
+    body.creator = req.user.sub;
+    await this.eventService.create(body);
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
-      message: 'Event Created Successfully',   
-    }
+      message: 'Event Created Successfully',
+    };
   }
 }
-
-
-
-

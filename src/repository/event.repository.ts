@@ -13,15 +13,21 @@ export class EventTransactionRepository extends BaseRepository {
     super(dataSource, req);
   }
 
-  async createEventWithMedia(data:EventDTO) {
-    const {media,creator,...eventDetail}=data
-   const saveEvent= (await this.getRepository(EventEntity).insert({creator:creator,...eventDetail})).identifiers;
-   if(media){
-    const newMediaArray=await Promise.all(media.data.map(async(element)=>{
-      return {path:element.name,event:saveEvent[0].id}
-    }))
-    await this.getRepository(EventMediaEntity).insert(newMediaArray)
-   }
-   
+  async createEventWithMedia(data: EventDTO) {
+    const { media, creator, ...eventDetail } = data;
+    const saveEvent = (
+      await this.getRepository(EventEntity).insert({
+        creator: creator,
+        ...eventDetail,
+      })
+    ).identifiers;
+    if (media) {
+      const newMediaArray = await Promise.all(
+        media.data.map(async (element) => {
+          return { path: element.name, event: saveEvent[0].id };
+        }),
+      );
+      await this.getRepository(EventMediaEntity).insert(newMediaArray);
+    }
   }
 }

@@ -9,6 +9,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { CharacterLength } from '@constants/enum';
+import { SuccessResponseDTO } from './response.dto';
 export class CommonDTO {
   @ApiProperty({
     description:
@@ -51,10 +52,7 @@ export class RegistrationDTO extends CommonDTO {
   name: string;
 }
 
-
-
 export class FollowUserDTO {
-
   @ApiProperty({
     description: 'The UUID of the user who is being followed.',
     type: String,
@@ -64,11 +62,8 @@ export class FollowUserDTO {
   @IsUUID()
   followUser: string;
 
-
-  followedBy: string; 
+  followingUser: string;
 }
-
-
 
 export class LikeDTO {
   @ApiProperty({
@@ -78,9 +73,62 @@ export class LikeDTO {
   })
   @IsNotEmpty()
   @IsUUID()
-  event: string ;
+  event: string;
 
-  user:  string ;
+  user: string;
+}
 
+class UserProfileDTO {
+  @ApiProperty({ description: 'Unique identifier of the user' })
+  id: string;
 
+  @ApiProperty({ description: 'Name of the user' })
+  name: string;
+
+  @ApiProperty({ description: 'Email address of the user' })
+  email: string;
+}
+
+class FollowUserDetailsDTO {
+  @ApiProperty({ description: 'Unique identifier of the follow relationship' })
+  id: string;
+
+  @ApiProperty({
+    description: 'Timestamp when the follow relationship was created',
+  })
+  createdAt: Date;
+
+  @ApiProperty({ description: 'Details of the follower user' })
+  followerUser?: UserProfileDTO;
+
+  @ApiProperty({ description: 'Details of the following user' })
+  followingUser?: UserProfileDTO;
+}
+
+export class UserProfileResponseDTO {
+  @ApiProperty({ description: 'Unique identifier of the user' })
+  id: string;
+
+  @ApiProperty({ description: 'Name of the user' })
+  name: string;
+
+  @ApiProperty({ description: 'Email address of the user' })
+  email: string;
+
+  @ApiProperty({
+    description: 'List of users the current user is following',
+    type: [FollowUserDetailsDTO],
+  })
+  following: FollowUserDetailsDTO[];
+
+  @ApiProperty({
+    description: 'List of users following the current user',
+    type: [FollowUserDetailsDTO],
+  })
+  follower: FollowUserDetailsDTO[];
+}
+
+export class ProfileResponseDTO extends SuccessResponseDTO {
+  @ApiProperty({ description: ' Profile Object', type: UserProfileResponseDTO })
+  data: UserProfileResponseDTO;
 }

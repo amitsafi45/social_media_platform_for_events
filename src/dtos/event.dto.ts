@@ -31,7 +31,8 @@ export class EventDTO {
   @ApiProperty({
     description: 'A detailed description of the event',
     maxLength: CharacterLength.FIVE_HUNDRED,
-    example: 'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
+    example:
+      'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
   })
   @IsNotEmpty()
   @IsString()
@@ -91,18 +92,15 @@ export class EventDTO {
   @Type(() => MediaDTO)
   media?: MediaDTO;
 
-  
-  creator:string
+  creator: string;
 }
-
-
-
 
 export class CommentDTO {
   @ApiProperty({
     description: 'A detailed description of the comment',
     maxLength: 200,
-    example: 'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
+    example:
+      'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
   })
   @IsNotEmpty()
   @IsString()
@@ -117,8 +115,5 @@ export class CommentDTO {
   @IsUUID()
   event: string;
 
-
-  commentator:string;
+  commentator: string;
 }
-
-

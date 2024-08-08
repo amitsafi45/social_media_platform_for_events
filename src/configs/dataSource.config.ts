@@ -7,7 +7,8 @@ import { typeOrmConfig } from '@configs/typeorm.config';
 const configService = new ConfigService();
 const dataSourceOptions = typeOrmConfig(configService) as DataSourceOptions;
 const dataSource = new DataSource(dataSourceOptions);
-dataSource.initialize()
+dataSource
+  .initialize()
   .then(() => {
     console.log('Data Source initialized successfully');
   })

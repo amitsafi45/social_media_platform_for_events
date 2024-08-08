@@ -1,19 +1,41 @@
-import { Body, Controller, HttpStatus, Post, Req } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { FollowUserService } from '@services/followUser.service'; 
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBody,
+} from '@nestjs/swagger';
+import { FollowUserService } from '@services/followUser.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
-import { FollowUserDTO, LikeDTO } from '@dtos/user.dto';
+import {
+  FollowUserDTO,
+  LikeDTO,
+  ProfileResponseDTO,
+  UserProfileResponseDTO,
+} from '@dtos/user.dto';
 import { CommentDTO } from '@dtos/event.dto';
 import { CommentService } from '@services/comment.service';
 import { EventLikeService } from '@services/eventLike.service';
+import { UserService } from '@services/user.service';
 
 @ApiTags('User')
 @ApiBearerAuth('access-token')
 @Controller('user')
 export class UserController {
-  constructor(private readonly followService: FollowUserService,
-    private readonly commentService : CommentService,
-    private readonly likeService:EventLikeService
+  constructor(
+    private readonly followService: FollowUserService,
+    private readonly commentService: CommentService,
+    private readonly likeService: EventLikeService,
+    private readonly userService: UserService,
   ) {}
 
   @Post('/follow')
@@ -30,9 +52,9 @@ export class UserController {
   })
   async followUser(
     @Body() body: FollowUserDTO,
-    @Req() req
+    @Req() req,
   ): Promise<SuccessResponseDTO> {
-    body.followedBy = req.user.sub;
+    body.followingUser = req.user.sub;
     await this.followService.follow(body);
     return {
       statusCode: HttpStatus.CREATED,
@@ -41,11 +63,7 @@ export class UserController {
     };
   }
 
-
-
-
-
-  @Post('/unfollow')
+  @Delete('/unfollow')
   @ApiOperation({ summary: 'unfollow a user' })
   @ApiBody({ type: FollowUserDTO })
   @ApiResponse({
@@ -59,9 +77,9 @@ export class UserController {
   })
   async unfollowUser(
     @Body() body: FollowUserDTO,
-    @Req() req
+    @Req() req,
   ): Promise<SuccessResponseDTO> {
-    body.followedBy = req.user.sub;
+    body.followingUser = req.user.sub;
     await this.followService.unfollow(body);
     return {
       statusCode: HttpStatus.CREATED,
@@ -69,7 +87,6 @@ export class UserController {
       message: 'unfollow User Successfully',
     };
   }
-
 
   @Post('/comment')
   @ApiOperation({ summary: 'Comment on an event' })
@@ -82,16 +99,18 @@ export class UserController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Bad Request',
   })
-  async commentOnEvent(@Body()body:CommentDTO,@Req()req):Promise<SuccessResponseDTO>{
-    body.commentator=req.user.sub
-   const data =await this.commentService.create(body)
-   return {
-    statusCode: HttpStatus.CREATED,
-    success: true,
-    message: 'Comment create Successfully',
-  };
+  async commentOnEvent(
+    @Body() body: CommentDTO,
+    @Req() req,
+  ): Promise<SuccessResponseDTO> {
+    body.commentator = req.user.sub;
+    const data = await this.commentService.create(body);
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: 'Comment create Successfully',
+    };
   }
-
 
   @Post('/like')
   @ApiOperation({ summary: 'Like event' })
@@ -104,13 +123,35 @@ export class UserController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Bad Request',
   })
-  async likeEvent(@Body()body:LikeDTO,@Req()req):Promise<SuccessResponseDTO>{
-    body.user=req.user.sub
-   const data =await this.likeService.create(body)
-   return {
-    statusCode: HttpStatus.CREATED,
-    success: true,
-    message: 'Event Liked Successfully',
-  };
+  async likeEvent(
+    @Body() body: LikeDTO,
+    @Req() req,
+  ): Promise<SuccessResponseDTO> {
+    body.user = req.user.sub;
+    const data = await this.likeService.create(body);
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: 'Event Liked Successfully',
+    };
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: 'Get the user profile along with followers and following list',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Profile Fetch Successfully',
+    type: ProfileResponseDTO,
+  })
+  async getProfile(@Req() req): Promise<ProfileResponseDTO> {
+    const data = await this.userService.getProfile(req.user.sub);
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: 'Profile Fetch Successfully',
+      data: data,
+    } as ProfileResponseDTO;
   }
 }

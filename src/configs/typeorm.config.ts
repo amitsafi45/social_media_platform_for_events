@@ -16,6 +16,7 @@ export const typeOrmConfig = (
   database: configService.get<string>('DB_DATABASE'),
   entities: [join(__dirname, '/../entities/*.entity{.ts,.js}')],
   subscribers: [EventEntitySubscriber],
+  // dropSchema:true,
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
 
   logging: configService.get<boolean>(

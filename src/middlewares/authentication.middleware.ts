@@ -1,4 +1,10 @@
-import { Injectable, NestMiddleware, HttpStatus, Req, Res } from '@nestjs/common';
+import {
+  Injectable,
+  NestMiddleware,
+  HttpStatus,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +18,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
     private readonly httpAdapterHost: HttpAdapterHost,
   ) {}
 
-  async use(@Req()req: Request, @Res() res: Response, next: () => void) {
+  async use(@Req() req: Request, @Res() res: Response, next: () => void) {
     const authorizationHeader = req.headers['authorization'];
     if (!authorizationHeader) {
       return this.unauthorizedResponse(res, 'Authorization header is missing');

@@ -31,10 +31,10 @@ export class EventEntity extends BaseEntity {
   @Column({
     name: 'category',
     type: 'enum',
-    default:EventCategory.None,
+    default: EventCategory.None,
     enum: EventCategory,
   })
-  category: EventCategory ;
+  category: EventCategory;
 
   @ManyToOne(() => UserEntity, (creator) => creator.events)
   @JoinColumn({ name: 'creator_id' })

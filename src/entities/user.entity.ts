@@ -27,7 +27,11 @@ export class UserEntity extends BaseEntity {
   })
   email: string;
 
-  @Column({ type: 'varchar', length: CharacterLength.TWO_HUNDRED_FIFTY_FIVE }) // Changed to varchar for hashed password
+  @Column({
+    type: 'varchar',
+    length: CharacterLength.TWO_HUNDRED_FIFTY_FIVE,
+    select: false,
+  }) // Changed to varchar for hashed password
   password: string;
 
   @OneToMany(() => EventEntity, (event) => event.creator)
@@ -45,7 +49,7 @@ export class UserEntity extends BaseEntity {
   @OneToOne(() => ProfileMediaEntity, (media) => media.user)
   profileMedia: ProfileMediaEntity;
 
-  @OneToMany(() => FollowUserEntity, (follow) => follow.followUser)
+  @OneToMany(() => FollowUserEntity, (follow) => follow.followingUser)
   following: FollowUserEntity[];
 
   @OneToMany(() => NotificationEntity, (notification) => notification.sender)
@@ -54,7 +58,6 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => NotificationEntity, (notification) => notification.receiver)
   receivedNotifications: NotificationEntity[];
 
-
-  @OneToMany(() => FollowUserEntity, (follow) => follow.followedBy)
-  followedBy: FollowUserEntity[];
+  @OneToMany(() => FollowUserEntity, (follow) => follow.followerUser)
+  follower: FollowUserEntity[];
 }
