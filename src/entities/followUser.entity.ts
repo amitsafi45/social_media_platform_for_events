@@ -23,9 +23,10 @@ export class FollowUserEntity {
   followedBy: UserEntity | string ;
 
   @CreateDateColumn({
-    name: 'created_at',
+    name: 'created_at', 
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
 }
+ 

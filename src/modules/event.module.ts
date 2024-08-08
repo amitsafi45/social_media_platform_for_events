@@ -6,18 +6,13 @@ import { EventService } from "@services/event.service";
 import { EventMediaEntity } from "@entities/eventMedia.entity";
 import { EventTransactionRepository } from "@repository/event.repository";
 import { AuthenticationMiddleware } from "@middlewares/authentication.middleware";
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { TransactionInterceptor } from "@utils/transaction.interceptor";
-import dataSource from "@configs/dataSource.config";
+import { EventEntitySubscriber } from "subscribers/event.subscribe";
+import { NotificationEntity } from "@entities/notification.entity";
 
 @Module({
-    imports:[TypeOrmModule.forFeature([EventEntity,EventMediaEntity])],
+    imports:[TypeOrmModule.forFeature([EventEntity,EventMediaEntity,NotificationEntity])],
     controllers:[EventController],
-    providers:[EventService,EventTransactionRepository,
-    //      {
-    //     provide: APP_INTERCEPTOR,
-    //     useFactory: () => new TransactionInterceptor(dataSource),
-    //   },
+    providers:[EventService,EventTransactionRepository,EventEntitySubscriber
     ]
 
 })

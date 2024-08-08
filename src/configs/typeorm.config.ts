@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
 import { join } from 'path';
 import { Environment } from '@constants/enum';
+import { EventEntitySubscriber } from 'subscribers/event.subscribe';
 
 export const typeOrmConfig = (
   configService: ConfigService,
@@ -14,7 +15,9 @@ export const typeOrmConfig = (
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
   entities: [join(__dirname, '/../entities/*.entity{.ts,.js}')],
+  subscribers: [EventEntitySubscriber],
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
+
   logging: configService.get<boolean>(
     'DB_LOGGING',
     configService.get('ENVIRONMENT') === Environment.Development ? true : false,
