@@ -3,12 +3,14 @@ import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nes
 import { FollowUserService } from '@services/followUser.service'; 
 import { SuccessResponseDTO } from '@dtos/response.dto';
 import { FollowUserDTO } from '@dtos/user.dto';
+import { CommentDTO } from '@dtos/event.dto';
+import { CommentService } from '@services/comment.service';
 
 @ApiTags('User')
 @ApiBearerAuth('access-token')
 @Controller('user')
 export class UserController {
-  constructor(private readonly followService: FollowUserService) {}
+  constructor(private readonly followService: FollowUserService,private readonly commentService : CommentService) {}
 
   @Post('/follow')
   @ApiOperation({ summary: 'Follow a user' })
@@ -62,5 +64,27 @@ export class UserController {
       success: true,
       message: 'unfollow User Successfully',
     };
+  }
+
+
+  @Post('/comment')
+  @ApiOperation({ summary: 'Comment on an event' })
+  @ApiResponse({
+    status: 201,
+    description: 'The comment has been successfully created.',
+    type: SuccessResponseDTO,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad Request',
+  })
+  async commentOnEvent(@Body()body:CommentDTO,@Req()req):Promise<SuccessResponseDTO>{
+    body.commentator=req.user.sub
+   const data =await this.commentService.create(body)
+   return {
+    statusCode: HttpStatus.CREATED,
+    success: true,
+    message: 'Comment create Successfully',
+  };
   }
 }

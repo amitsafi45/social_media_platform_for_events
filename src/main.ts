@@ -20,7 +20,6 @@ async function bootstrap() {
       exceptionFactory: errorMessageExtract,
     }),
   );
-  console.log(process.cwd(),"LL")
   const PORT_NUMBER = await app.get(ConfigService).get('PORT');
   const config = new DocumentBuilder()
     .setTitle('Social Media Platform For Events.')

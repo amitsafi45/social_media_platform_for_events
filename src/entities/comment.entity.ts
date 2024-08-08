@@ -8,11 +8,11 @@ export class CommentEntity extends BaseEntity {
   @Column({ type: 'varchar', length: 200, name: 'description' })
   description: string;
 
-  @ManyToOne(() => EventEntity, (event) => event.comments)
+  @ManyToOne(() => EventEntity, (event) => event.comments,{nullable:false})
   @JoinColumn({ name: 'event_id' })
-  event: EventEntity;
+  event: EventEntity | string ;
 
   @ManyToOne(() => UserEntity, (user) => user.comments)
   @JoinColumn({ name: 'commentator_id' })
-  commentator: UserEntity;
+  commentator: UserEntity | string ;
 }

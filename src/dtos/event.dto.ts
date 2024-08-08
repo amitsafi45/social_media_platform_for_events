@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
   IsTimeZone,
+  IsUUID,
   Matches,
   MaxLength,
   ValidateNested,
@@ -93,4 +94,31 @@ export class EventDTO {
   
   creator:string
 }
+
+
+
+
+export class CommentDTO {
+  @ApiProperty({
+    description: 'A detailed description of the comment',
+    maxLength: 200,
+    example: 'Join us for an evening of smooth jazz and great company. Featuring top local artists.',
+  })
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(200)
+  description: string;
+
+  @ApiProperty({
+    description: 'The ID of the event the comment is associated with',
+    example: 'd3b07384d113edec49eaa6238ad5ff00',
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  event: string;
+
+
+  commentator:string;
+}
+
 
