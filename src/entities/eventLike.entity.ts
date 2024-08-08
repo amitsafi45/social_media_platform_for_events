@@ -15,7 +15,7 @@ export class EventLikeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.likes)
+  @ManyToOne(() => UserEntity, (user) => user.eventLikes)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity | string ;
 

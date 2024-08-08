@@ -13,6 +13,7 @@ import { ProfileMediaEntity } from '@entities/profileMedia.entity';
 import { FollowUserEntity } from '@entities/followUser.entity';
 import { BaseEntity } from '@entities/base.entity';
 import { CharacterLength } from '@constants/enum';
+import { NotificationEntity } from './notification.entity';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
@@ -35,8 +36,8 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => CommentEntity, (comment) => comment.commentator)
   comments: CommentEntity[];
 
-  @OneToMany(() => EventLikeEntity, (like) => like.user)
-  likes: EventLikeEntity[];
+  @OneToMany(() => EventLikeEntity, (eventLike) => eventLike.user)
+  eventLikes: EventLikeEntity[];
 
   @OneToMany(() => TokenEntity, (token) => token.user, { cascade: true })
   tokens: TokenEntity[];
@@ -46,6 +47,13 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => FollowUserEntity, (follow) => follow.followUser)
   following: FollowUserEntity[];
+
+  @OneToMany(() => NotificationEntity, (notification) => notification.sender)
+  sentNotifications: NotificationEntity[];
+
+  @OneToMany(() => NotificationEntity, (notification) => notification.receiver)
+  receivedNotifications: NotificationEntity[];
+
 
   @OneToMany(() => FollowUserEntity, (follow) => follow.followedBy)
   followedBy: FollowUserEntity[];
