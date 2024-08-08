@@ -1,7 +1,7 @@
 import { UserController } from "@controllers/user.controller";
 import { CommentEntity } from "@entities/comment.entity";
 import { FollowUserEntity } from "@entities/followUser.entity";
-import { EventLikeEntity } from "@entities/like.entity";
+import { EventLikeEntity } from "@entities/eventLike.entity";
 import { AuthenticationMiddleware } from "@middlewares/authentication.middleware";
 import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";

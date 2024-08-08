@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { EventEntity } from '@entities/event.entity';
 import { CommentEntity } from '@entities/comment.entity';
-import { EventLikeEntity } from '@entities/like.entity';
+import { EventLikeEntity } from '@entities/eventLike.entity';
 import { TokenEntity } from '@entities/token.entity';
 import { ProfileMediaEntity } from '@entities/profileMedia.entity';
 import { FollowUserEntity } from '@entities/followUser.entity';

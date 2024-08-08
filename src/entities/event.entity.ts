@@ -3,7 +3,7 @@ import { BaseEntity } from './base.entity';
 import { EventCategory } from '../constants/enum';
 import { UserEntity } from './user.entity';
 import { CommentEntity } from './comment.entity';
-import { EventLikeEntity } from './like.entity';
+import { EventLikeEntity } from './eventLike.entity';
 import { EventMediaEntity } from './eventMedia.entity';
 
 @Entity('event')

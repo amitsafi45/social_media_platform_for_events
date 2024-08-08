@@ -1,5 +1,5 @@
 import { LikeDTO } from "@dtos/user.dto";
-import { EventLikeEntity } from "@entities/like.entity";
+import { EventLikeEntity } from "@entities/eventLike.entity";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
