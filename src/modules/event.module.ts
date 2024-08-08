@@ -24,6 +24,6 @@ export class EventModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthenticationMiddleware)
-      .forRoutes({ path: 'event', method: RequestMethod.POST });
+      .forRoutes({ path: 'event', method: RequestMethod.POST },{ path: 'event', method: RequestMethod.GET });
   }
 }

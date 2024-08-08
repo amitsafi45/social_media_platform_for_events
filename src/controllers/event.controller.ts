@@ -1,17 +1,21 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Post,
+  Query,
   Req,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { EventDTO } from '@dtos/event.dto';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { EventDTO, EventListDTO, EventListResponseDTO } from '@dtos/event.dto';
 import { EventService } from '@services/event.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
 import { TransactionInterceptor } from '@utils/transaction.interceptor';
 import dataSource from '@configs/dataSource.config';
+import { EventCategory } from '@constants/enum';
+import { EventEntity } from '@entities/event.entity';
 
 @ApiTags('Event')
 @ApiBearerAuth('access-token')
@@ -50,5 +54,37 @@ export class EventController {
       success: true,
       message: 'Event Created Successfully',
     };
+  }
+
+
+  @Get()
+  @ApiQuery({ name: 'category', enum: EventCategory, required: false })
+  @ApiQuery({ name: 'search', type: String, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false, example: 10 })
+  @ApiQuery({ name: 'page', type: Number, required: false, example: 1 })
+  @ApiResponse({ status: 201, description: 'Event List', type: EventListResponseDTO })
+  async eventList(
+    @Req() req: any,
+    @Query('category') category: EventCategory,
+    @Query('search') search: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
+  ):Promise<EventListResponseDTO>{
+    const {data,...pagination} = await this.eventService.eventList(
+      req.user.sub,
+      category || EventCategory.None,
+      search,
+      limit,
+      page,
+    );
+
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: 'Event Fetch Successfully',
+      data:data as EventListDTO[],
+      ...pagination
+    };
+
   }
 }

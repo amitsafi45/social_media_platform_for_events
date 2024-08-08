@@ -117,3 +117,54 @@ export class CommentDTO {
 
   commentator: string;
 }
+
+
+
+
+
+class CreatorDTO {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  email: string;
+}
+
+export class EventListDTO {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  category: string;
+
+  @ApiProperty({ type: CreatorDTO })
+  creator: CreatorDTO;
+}
+
+export class PaginatedEventResponseDto extends SuccessResponseDTO {
+  @ApiProperty({ type: [EventListDTO] })
+  data: EventListDTO[];
+
+  @ApiProperty()
+  currentPage: number;
+
+  @ApiProperty()
+  totalPages: number;
+
+  @ApiProperty()
+  limit: number;
+
+  @ApiProperty()
+  total: number;
+}
+
+export class EventListResponseDTO extends PaginatedEventResponseDto {
+
+
+}
