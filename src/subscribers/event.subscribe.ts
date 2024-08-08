@@ -17,19 +17,22 @@ export class EventEntitySubscriber
   }
 
   async afterInsert(event: InsertEvent<EventEntity>) {
-    const getFollowers=await event.manager.getRepository(FollowUserEntity).find({
-      where:{
-        followerUser:{
-          id:event.entity.creator as string
-        }       
-      },
-      relations:{
-        followingUser:true}
-    })
-    getFollowers.toString()
-    console.log(event.entity.creator as string)
-    console.log(getFollowers,'getFollowers')
-   
+    const getFollowers = await event.manager
+      .getRepository(FollowUserEntity)
+      .find({
+        where: {
+          followerUser: {
+            id: event.entity.creator as string,
+          },
+        },
+        relations: {
+          followingUser: true,
+        },
+      });
+    getFollowers.toString();
+    console.log(event.entity.creator as string);
+    console.log(getFollowers, 'getFollowers');
+
     // Check if there are any followers and create notifications for each
     if (getFollowers.length > 0) {
       const notifications = getFollowers.map((follower) => ({

@@ -118,10 +118,6 @@ export class CommentDTO {
   commentator: string;
 }
 
-
-
-
-
 class CreatorDTO {
   @ApiProperty()
   id: string;
@@ -164,7 +160,4 @@ export class PaginatedEventResponseDto extends SuccessResponseDTO {
   total: number;
 }
 
-export class EventListResponseDTO extends PaginatedEventResponseDto {
-
-
-}
+export class EventListResponseDTO extends PaginatedEventResponseDto {}

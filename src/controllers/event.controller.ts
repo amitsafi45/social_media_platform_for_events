@@ -8,7 +8,14 @@ import {
   Req,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { EventDTO, EventListDTO, EventListResponseDTO } from '@dtos/event.dto';
 import { EventService } from '@services/event.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
@@ -41,7 +48,6 @@ export class EventController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Internal server error.',
   })
-  
   @UseInterceptors(new TransactionInterceptor(dataSource))
   async create(
     @Body() body: EventDTO,
@@ -56,21 +62,24 @@ export class EventController {
     };
   }
 
-
   @Get()
   @ApiQuery({ name: 'category', enum: EventCategory, required: false })
   @ApiQuery({ name: 'search', type: String, required: false })
   @ApiQuery({ name: 'limit', type: Number, required: false, example: 10 })
   @ApiQuery({ name: 'page', type: Number, required: false, example: 1 })
-  @ApiResponse({ status: 201, description: 'Event List', type: EventListResponseDTO })
+  @ApiResponse({
+    status: 201,
+    description: 'Event List',
+    type: EventListResponseDTO,
+  })
   async eventList(
     @Req() req: any,
     @Query('category') category: EventCategory,
     @Query('search') search: string,
     @Query('limit') limit: number = 10,
     @Query('page') page: number = 1,
-  ):Promise<EventListResponseDTO>{
-    const {data,...pagination} = await this.eventService.eventList(
+  ): Promise<EventListResponseDTO> {
+    const { data, ...pagination } = await this.eventService.eventList(
       req.user.sub,
       category || EventCategory.None,
       search,
@@ -82,9 +91,8 @@ export class EventController {
       statusCode: HttpStatus.CREATED,
       success: true,
       message: 'Event Fetch Successfully',
-      data:data as EventListDTO[],
-      ...pagination
+      data: data as EventListDTO[],
+      ...pagination,
     };
-
   }
 }

@@ -10,9 +10,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
-  app.use(helmet({
-    xPoweredBy: false, // Hides the X-Powered-By header or sets it to a custom value
-  }));
+  app.use(
+    helmet({
+      xPoweredBy: false, // Hides the X-Powered-By header or sets it to a custom value
+    }),
+  );
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.setGlobalPrefix('social-platform/api/v1');

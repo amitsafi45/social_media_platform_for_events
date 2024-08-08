@@ -17,7 +17,5 @@ export class CommentEntitySubscriber
     return CommentEntity;
   }
 
-  async afterInsert(event: InsertEvent<CommentEntity>) {
-     
-}
+  async afterInsert(event: InsertEvent<CommentEntity>) {}
 }

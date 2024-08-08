@@ -11,19 +11,18 @@ export class EventService {
   constructor(
     private readonly EventTransactionRepository: EventTransactionRepository,
     @InjectRepository(EventEntity)
-    private readonly eventRepo:Repository<EventEntity>
+    private readonly eventRepo: Repository<EventEntity>,
   ) {}
   async create(data: EventDTO) {
     return await this.EventTransactionRepository.createEventWithMedia(data);
   }
 
- 
   async eventList(
     creator: string,
     category: EventCategory = EventCategory.None,
     search: string,
     limit: number,
-    page: number
+    page: number,
   ) {
     const query = this.eventRepo
       .createQueryBuilder('event')
@@ -37,12 +36,12 @@ export class EventService {
         'creator.email',
       ])
       .where('creator.id != :creatorId', { creatorId: creator });
-  
+
     // Filter by category if it's not 'None'
     if (category !== EventCategory.None) {
       query.andWhere('event.category = :type', { type: category });
     }
-  
+
     // Perform case-insensitive search in title, creator name, and email
     if (search) {
       query.andWhere(
@@ -56,10 +55,10 @@ export class EventService {
             .orWhere('LOWER(creator.email) ILIKE LOWER(:searchTerm)', {
               searchTerm: `%${search}%`,
             });
-        })
+        }),
       );
     }
-  
+
     paginate(query, page, limit);
 
     const [results, total] = await query.getManyAndCount();

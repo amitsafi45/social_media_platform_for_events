@@ -14,11 +14,15 @@ export class NotificationEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.sentNotifications,{nullable:false})
+  @ManyToOne(() => UserEntity, (user) => user.sentNotifications, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'sender_id' })
   sender: UserEntity | string;
 
-  @ManyToOne(() => UserEntity, (user) => user.receivedNotifications,{nullable:false})
+  @ManyToOne(() => UserEntity, (user) => user.receivedNotifications, {
+    nullable: false,
+  })
   @JoinColumn({ name: 'receiver_id' })
   receiver: UserEntity | string;
 

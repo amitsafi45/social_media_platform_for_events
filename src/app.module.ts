@@ -31,7 +31,6 @@ import { APP_GUARD } from '@nestjs/core';
           ttl: config.get('THROTTLE_TTL'),
           limit: config.get('THROTTLE_LIMIT'),
         },
-
       ],
     }),
 
@@ -46,9 +45,12 @@ import { APP_GUARD } from '@nestjs/core';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService,{
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard,
-  },],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
