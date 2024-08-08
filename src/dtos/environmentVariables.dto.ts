@@ -68,4 +68,14 @@ export class EnvironmentVariablesDTO {
   @IsString()
   @Length(1, 256) // Assuming database name has a maximum length of 256 characters
   DB_DATABASE: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  THROTTLE_TTL: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(1)
+  THROTTLE_LIMIT: number;
 }

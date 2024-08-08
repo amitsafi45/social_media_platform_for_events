@@ -10,7 +10,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { MediaModule } from '@modules/media.module';
 import { EventModule } from '@modules/event.module';
 import { UserModule } from '@modules/user.module';
-
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +23,18 @@ import { UserModule } from '@modules/user.module';
     JwtModule.register({
       global: true,
     }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => [
+        {
+          ttl: config.get('THROTTLE_TTL'),
+          limit: config.get('THROTTLE_LIMIT'),
+        },
+
+      ],
+    }),
+
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: typeOrmConfig,
@@ -33,6 +46,9 @@ import { UserModule } from '@modules/user.module';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,{
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard,
+  },],
 })
 export class AppModule {}
