@@ -145,7 +145,7 @@ export class AuthController {
     const token = await this.authService.tokenGenerator(payload);
     const accessExpiresIn = await this.jwtService.decode(token.access);
     const refreshExpiresIn = await this.jwtService.decode(token.refresh);
-    await this.tokenService.create(token.refresh, payload.sub);
+    await this.tokenService.create(token.refresh, payload.id);
     return {
       statusCode: HttpStatus.CREATED,
       success: true,

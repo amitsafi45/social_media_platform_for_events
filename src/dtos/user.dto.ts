@@ -67,3 +67,20 @@ export class FollowUserDTO {
 
   followedBy: string; 
 }
+
+
+
+export class LikeDTO {
+  @ApiProperty({
+    description: 'The UUID of the user who is being followed.',
+    type: String,
+    example: 'e2e5bff7-bf8e-4c57-8a59-33e09cde4b1f',
+  })
+  @IsNotEmpty()
+  @IsUUID()
+  event: string ;
+
+  user:  string ;
+
+
+}

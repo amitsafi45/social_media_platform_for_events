@@ -3,7 +3,7 @@ import { BaseEntity } from './base.entity';
 import { EventCategory } from '../constants/enum';
 import { UserEntity } from './user.entity';
 import { CommentEntity } from './comment.entity';
-import { LikeEntity } from './like.entity';
+import { EventLikeEntity } from './like.entity';
 import { EventMediaEntity } from './eventMedia.entity';
 
 @Entity('event')
@@ -31,10 +31,10 @@ export class EventEntity extends BaseEntity {
   @Column({
     name: 'category',
     type: 'enum',
-    nullable: true,
+    default:EventCategory.None,
     enum: EventCategory,
   })
-  category: string | null;
+  category: EventCategory ;
 
   @ManyToOne(() => UserEntity, (creator) => creator.events)
   @JoinColumn({ name: 'creator_id' })
@@ -43,8 +43,8 @@ export class EventEntity extends BaseEntity {
   @OneToMany(() => CommentEntity, (comment) => comment.event)
   comments: CommentEntity[];
 
-  @OneToMany(() => LikeEntity, (like) => like.event)
-  likes: LikeEntity[];
+  @OneToMany(() => EventLikeEntity, (eventLikes) => eventLikes.event)
+  eventLikes: EventLikeEntity[];
 
   @OneToMany(() => EventMediaEntity, (media) => media.event)
   eventMedia: EventMediaEntity[];

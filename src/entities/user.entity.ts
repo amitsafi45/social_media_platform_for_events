@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { EventEntity } from '@entities/event.entity';
 import { CommentEntity } from '@entities/comment.entity';
-import { LikeEntity } from '@entities/like.entity';
+import { EventLikeEntity } from '@entities/like.entity';
 import { TokenEntity } from '@entities/token.entity';
 import { ProfileMediaEntity } from '@entities/profileMedia.entity';
 import { FollowUserEntity } from '@entities/followUser.entity';
@@ -35,8 +35,8 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => CommentEntity, (comment) => comment.commentator)
   comments: CommentEntity[];
 
-  @OneToMany(() => LikeEntity, (like) => like.user)
-  likes: LikeEntity[];
+  @OneToMany(() => EventLikeEntity, (like) => like.user)
+  likes: EventLikeEntity[];
 
   @OneToMany(() => TokenEntity, (token) => token.user, { cascade: true })
   tokens: TokenEntity[];

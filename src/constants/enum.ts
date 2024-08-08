@@ -2,11 +2,13 @@ export enum EventCategory {
   Music = 'Music',
   Sports = 'Sports',
   Tech = 'Tech',
+   None="None"
 }
 
 export enum MediaType {
   Event = 'Event',
   ProfileImage = 'Profile_Image',
+ 
 }
 
 export enum Environment {

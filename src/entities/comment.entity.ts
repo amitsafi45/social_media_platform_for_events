@@ -8,7 +8,7 @@ export class CommentEntity extends BaseEntity {
   @Column({ type: 'varchar', length: 200, name: 'description' })
   description: string;
 
-  @ManyToOne(() => EventEntity, (event) => event.comments,{nullable:false})
+  @ManyToOne(() => EventEntity, (event) => event.comments)
   @JoinColumn({ name: 'event_id' })
   event: EventEntity | string ;
 

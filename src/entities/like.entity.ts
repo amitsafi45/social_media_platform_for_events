@@ -9,19 +9,19 @@ import {
 import { UserEntity } from '@entities/user.entity';
 import { EventEntity } from '@entities/event.entity';
 
-@Entity('like')
+@Entity('event_like')
 @Unique(['user', 'event'])
-export class LikeEntity {
+export class EventLikeEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => UserEntity, (user) => user.likes)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UserEntity | string ;
 
-  @ManyToOne(() => EventEntity, (event) => event.likes)
+  @ManyToOne(() => EventEntity, (event) => event.eventLikes)
   @JoinColumn({ name: 'event_id' })
-  event: EventEntity;
+  event: EventEntity | string ;
 
   @CreateDateColumn({
     name: 'created_at',

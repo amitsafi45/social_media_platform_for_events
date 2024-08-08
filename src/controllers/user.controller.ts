@@ -2,15 +2,19 @@ import { Body, Controller, HttpStatus, Post, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { FollowUserService } from '@services/followUser.service'; 
 import { SuccessResponseDTO } from '@dtos/response.dto';
-import { FollowUserDTO } from '@dtos/user.dto';
+import { FollowUserDTO, LikeDTO } from '@dtos/user.dto';
 import { CommentDTO } from '@dtos/event.dto';
 import { CommentService } from '@services/comment.service';
+import { EventLikeService } from '@services/eventLike.service';
 
 @ApiTags('User')
 @ApiBearerAuth('access-token')
 @Controller('user')
 export class UserController {
-  constructor(private readonly followService: FollowUserService,private readonly commentService : CommentService) {}
+  constructor(private readonly followService: FollowUserService,
+    private readonly commentService : CommentService,
+    private readonly likeService:EventLikeService
+  ) {}
 
   @Post('/follow')
   @ApiOperation({ summary: 'Follow a user' })
@@ -85,6 +89,28 @@ export class UserController {
     statusCode: HttpStatus.CREATED,
     success: true,
     message: 'Comment create Successfully',
+  };
+  }
+
+
+  @Post('/like')
+  @ApiOperation({ summary: 'Like event' })
+  @ApiResponse({
+    status: 201,
+    description: 'Event successfully Liked',
+    type: SuccessResponseDTO,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Bad Request',
+  })
+  async likeEvent(@Body()body:LikeDTO,@Req()req):Promise<SuccessResponseDTO>{
+    body.user=req.user.sub
+   const data =await this.likeService.create(body)
+   return {
+    statusCode: HttpStatus.CREATED,
+    success: true,
+    message: 'Event Liked Successfully',
   };
   }
 }
