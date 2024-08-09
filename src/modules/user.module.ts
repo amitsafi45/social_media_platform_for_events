@@ -36,6 +36,7 @@ export class UserModule {
         { path: 'user/comment', method: RequestMethod.POST },
         { path: 'user/like', method: RequestMethod.POST },
         { path: 'user/', method: RequestMethod.GET },
+        { path: 'user/list', method: RequestMethod.GET },
         {path:'user/notification',method:RequestMethod.GET}
       );
   }

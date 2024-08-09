@@ -16,6 +16,7 @@ import { CharacterLength, EventCategory } from '@constants/enum';
 import { MediaDTO } from './media.dto';
 import { Type } from 'class-transformer';
 import { SuccessResponseDTO } from './response.dto';
+import { UserProfileDTO } from './user.dto';
 
 export class EventDTO {
   @ApiProperty({
@@ -118,17 +119,6 @@ export class CommentDTO {
   commentator: string;
 }
 
-class CreatorDTO {
-  @ApiProperty()
-  id: string;
-
-  @ApiProperty()
-  name: string;
-
-  @ApiProperty()
-  email: string;
-}
-
 export class EventListDTO {
   @ApiProperty()
   id: string;
@@ -139,8 +129,8 @@ export class EventListDTO {
   @ApiProperty()
   category: string;
 
-  @ApiProperty({ type: CreatorDTO })
-  creator: CreatorDTO;
+  @ApiProperty({ type: UserProfileDTO })
+  creator: UserProfileDTO;
 }
 
 export class PaginatedEventResponseDto extends SuccessResponseDTO {
@@ -161,3 +151,4 @@ export class PaginatedEventResponseDto extends SuccessResponseDTO {
 }
 
 export class EventListResponseDTO extends PaginatedEventResponseDto {}
+

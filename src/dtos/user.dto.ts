@@ -78,7 +78,7 @@ export class LikeDTO {
   user: string;
 }
 
-class UserProfileDTO {
+export class UserProfileDTO {
   @ApiProperty({ description: 'Unique identifier of the user' })
   id: string;
 
@@ -131,8 +131,12 @@ export class UserProfileResponseDTO {
 export class ProfileResponseDTO extends SuccessResponseDTO {
   @ApiProperty({ description: ' Profile Object', type: UserProfileResponseDTO })
   data: UserProfileResponseDTO;
+  
 }
 
 
-
+export class ProfileListResponseDTO extends SuccessResponseDTO{
+  @ApiProperty({ description: ' Profile Object', type: [UserProfileDTO] })
+  data: UserProfileDTO[];
+}
 

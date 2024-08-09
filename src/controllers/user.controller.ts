@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import {
@@ -13,13 +14,16 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBody,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { FollowUserService } from '@services/followUser.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
 import {
   FollowUserDTO,
   LikeDTO,
+  ProfileListResponseDTO,
   ProfileResponseDTO,
+  UserProfileDTO,
   UserProfileResponseDTO,
 } from '@dtos/user.dto';
 import { CommentDTO } from '@dtos/event.dto';
@@ -177,4 +181,32 @@ export class UserController {
       data: data as CreateNotificationDTO[],
     } ;
   }
+
+  @Get('/list')
+  @ApiQuery({ name: 'search', type: String, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false, example: 10 })
+  @ApiQuery({ name: 'page', type: Number, required: false, example: 1 })
+  @ApiResponse({
+    status: 201,
+    description: 'Profile List',
+    // type: EventListResponseDTO,
+  })
+  async getProfileList(
+    @Req()req,
+    @Query('search') search: string,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
+
+):Promise<ProfileListResponseDTO> {
+     const {data,...pagination}=await this.userService.profileList(req.user.sub,search,limit,page)
+     return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: ' Fetch profile list Successfully',
+      data: data as UserProfileDTO [],
+      ...pagination
+    } as ProfileListResponseDTO ;
+     
+  }
+
 }
