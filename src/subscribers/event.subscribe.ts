@@ -30,9 +30,6 @@ export class EventEntitySubscriber
         },
       });
     getFollowers.toString();
-    console.log(event.entity.creator as string);
-    console.log(getFollowers, 'getFollowers');
-
     // Check if there are any followers and create notifications for each
     if (getFollowers.length > 0) {
       const notifications = getFollowers.map((follower) => ({
