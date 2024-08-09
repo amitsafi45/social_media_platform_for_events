@@ -5,6 +5,7 @@ import { join } from 'path';
 import { Environment } from '@constants/enum';
 import { EventEntitySubscriber } from 'subscribers/event.subscribe';
 import { CommentEntitySubscriber } from 'subscribers/comment.subscribe';
+import { EventLikeEntitySubscriber } from 'subscribers/eventLike.subscribe';
 
 export const typeOrmConfig = (
   configService: ConfigService,
@@ -16,7 +17,7 @@ export const typeOrmConfig = (
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
   entities: [join(__dirname, '/../entities/*.entity{.ts,.js}')],
-  subscribers: [EventEntitySubscriber, CommentEntitySubscriber],
+  subscribers: [EventEntitySubscriber, CommentEntitySubscriber,EventLikeEntitySubscriber],
   // dropSchema:true,
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
 
