@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import { SuccessResponseDTO } from './response.dto';
 
 export class CreateNotificationDTO {
   @ApiProperty({
@@ -43,4 +44,13 @@ export class CreateNotificationDTO {
   @IsNotEmpty()
   @IsUUID()
   contentId: string;
+}
+
+
+export class NotificationResponseDTO extends SuccessResponseDTO{
+       @ApiProperty({
+        description: 'UUID of the content associated with the notification',
+        type:[CreateNotificationDTO]
+       })
+       data:CreateNotificationDTO[]
 }

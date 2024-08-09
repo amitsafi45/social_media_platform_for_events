@@ -10,6 +10,8 @@ import { FollowUserService } from '@services/followUser.service';
 import { EventLikeService } from '@services/eventLike.service';
 import { UserService } from '@services/user.service';
 import { UserEntity } from '@entities/user.entity';
+import { NotificationService } from '@services/notification.service';
+import { NotificationEntity } from '@entities/notification.entity';
 
 @Module({
   imports: [
@@ -18,10 +20,11 @@ import { UserEntity } from '@entities/user.entity';
       CommentEntity,
       EventLikeEntity,
       UserEntity,
+      NotificationEntity
     ]),
   ],
   controllers: [UserController],
-  providers: [FollowUserService, CommentService, EventLikeService, UserService],
+  providers: [FollowUserService, CommentService, EventLikeService, UserService,NotificationService],
 })
 export class UserModule {
   configure(consumer: MiddlewareConsumer) {
@@ -33,6 +36,7 @@ export class UserModule {
         { path: 'user/comment', method: RequestMethod.POST },
         { path: 'user/like', method: RequestMethod.POST },
         { path: 'user/', method: RequestMethod.GET },
+        {path:'user/notification',method:RequestMethod.GET}
       );
   }
 }

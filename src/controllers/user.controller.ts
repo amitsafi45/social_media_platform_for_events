@@ -26,6 +26,9 @@ import { CommentDTO } from '@dtos/event.dto';
 import { CommentService } from '@services/comment.service';
 import { EventLikeService } from '@services/eventLike.service';
 import { UserService } from '@services/user.service';
+import { NotificationService } from '@services/notification.service';
+import { CreateNotificationDTO, NotificationResponseDTO } from '@dtos/notification.dto';
+import { NotificationEntity } from '@entities/notification.entity';
 
 @ApiTags('User')
 @ApiBearerAuth('access-token')
@@ -36,6 +39,7 @@ export class UserController {
     private readonly commentService: CommentService,
     private readonly likeService: EventLikeService,
     private readonly userService: UserService,
+    private readonly notificationService:NotificationService
   ) {}
 
   @Post('/follow')
@@ -153,5 +157,24 @@ export class UserController {
       message: 'Profile Fetch Successfully',
       data: data,
     } as ProfileResponseDTO;
+  }
+
+  @Get('notification')
+  @ApiOperation({
+    summary: ' Fetch Notification List ',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: ' Fetch Notification List Successfully',
+    type: ProfileResponseDTO,
+  })
+  async notificationList(@Req() req):Promise<NotificationResponseDTO>{
+    const data=await this.notificationService.getNotificationByReceiverId(req.user.sub)
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: ' Fetch Notification Successfully',
+      data: data as CreateNotificationDTO[],
+    } ;
   }
 }
