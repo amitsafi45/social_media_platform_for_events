@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -12,6 +12,7 @@ import { EventModule } from '@modules/event.module';
 import { UserModule } from '@modules/user.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { LoggingMiddleware } from '@middlewares/logging.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -53,4 +54,8 @@ import { APP_GUARD } from '@nestjs/core';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements MediaModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*'); // Apply middleware globally or to specific routes
+  }
+}
