@@ -151,4 +151,3 @@ export class PaginatedEventResponseDto extends SuccessResponseDTO {
 }
 
 export class EventListResponseDTO extends PaginatedEventResponseDto {}
-

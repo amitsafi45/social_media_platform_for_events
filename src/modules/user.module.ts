@@ -20,11 +20,17 @@ import { NotificationEntity } from '@entities/notification.entity';
       CommentEntity,
       EventLikeEntity,
       UserEntity,
-      NotificationEntity
+      NotificationEntity,
     ]),
   ],
   controllers: [UserController],
-  providers: [FollowUserService, CommentService, EventLikeService, UserService,NotificationService],
+  providers: [
+    FollowUserService,
+    CommentService,
+    EventLikeService,
+    UserService,
+    NotificationService,
+  ],
 })
 export class UserModule {
   configure(consumer: MiddlewareConsumer) {
@@ -37,7 +43,7 @@ export class UserModule {
         { path: 'user/like', method: RequestMethod.POST },
         { path: 'user/', method: RequestMethod.GET },
         { path: 'user/list', method: RequestMethod.GET },
-        {path:'user/notification',method:RequestMethod.GET}
+        { path: 'user/notification', method: RequestMethod.GET },
       );
   }
 }

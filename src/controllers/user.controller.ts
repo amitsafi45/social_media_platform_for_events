@@ -31,7 +31,10 @@ import { CommentService } from '@services/comment.service';
 import { EventLikeService } from '@services/eventLike.service';
 import { UserService } from '@services/user.service';
 import { NotificationService } from '@services/notification.service';
-import { CreateNotificationDTO, NotificationResponseDTO } from '@dtos/notification.dto';
+import {
+  CreateNotificationDTO,
+  NotificationResponseDTO,
+} from '@dtos/notification.dto';
 import { NotificationEntity } from '@entities/notification.entity';
 
 @ApiTags('User')
@@ -43,7 +46,7 @@ export class UserController {
     private readonly commentService: CommentService,
     private readonly likeService: EventLikeService,
     private readonly userService: UserService,
-    private readonly notificationService:NotificationService
+    private readonly notificationService: NotificationService,
   ) {}
 
   @Post('/follow')
@@ -172,14 +175,16 @@ export class UserController {
     description: ' Fetch Notification List Successfully',
     type: ProfileResponseDTO,
   })
-  async notificationList(@Req() req):Promise<NotificationResponseDTO>{
-    const data=await this.notificationService.getNotificationByReceiverId(req.user.sub)
+  async notificationList(@Req() req): Promise<NotificationResponseDTO> {
+    const data = await this.notificationService.getNotificationByReceiverId(
+      req.user.sub,
+    );
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
       message: ' Fetch Notification Successfully',
       data: data as CreateNotificationDTO[],
-    } ;
+    };
   }
 
   @Get('/list')
@@ -192,21 +197,23 @@ export class UserController {
     // type: EventListResponseDTO,
   })
   async getProfileList(
-    @Req()req,
+    @Req() req,
     @Query('search') search: string,
     @Query('limit') limit: number = 10,
     @Query('page') page: number = 1,
-
-):Promise<ProfileListResponseDTO> {
-     const {data,...pagination}=await this.userService.profileList(req.user.sub,search,limit,page)
-     return {
+  ): Promise<ProfileListResponseDTO> {
+    const { data, ...pagination } = await this.userService.profileList(
+      req.user.sub,
+      search,
+      limit,
+      page,
+    );
+    return {
       statusCode: HttpStatus.CREATED,
       success: true,
       message: ' Fetch profile list Successfully',
-      data: data as UserProfileDTO [],
-      ...pagination
-    } as ProfileListResponseDTO ;
-     
+      data: data as UserProfileDTO[],
+      ...pagination,
+    } as ProfileListResponseDTO;
   }
-
 }

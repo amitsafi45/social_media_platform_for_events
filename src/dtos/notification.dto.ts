@@ -46,11 +46,10 @@ export class CreateNotificationDTO {
   contentId: string;
 }
 
-
-export class NotificationResponseDTO extends SuccessResponseDTO{
-       @ApiProperty({
-        description: 'UUID of the content associated with the notification',
-        type:[CreateNotificationDTO]
-       })
-       data:CreateNotificationDTO[]
+export class NotificationResponseDTO extends SuccessResponseDTO {
+  @ApiProperty({
+    description: 'UUID of the content associated with the notification',
+    type: [CreateNotificationDTO],
+  })
+  data: CreateNotificationDTO[];
 }

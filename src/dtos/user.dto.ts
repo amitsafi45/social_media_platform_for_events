@@ -131,12 +131,9 @@ export class UserProfileResponseDTO {
 export class ProfileResponseDTO extends SuccessResponseDTO {
   @ApiProperty({ description: ' Profile Object', type: UserProfileResponseDTO })
   data: UserProfileResponseDTO;
-  
 }
 
-
-export class ProfileListResponseDTO extends SuccessResponseDTO{
+export class ProfileListResponseDTO extends SuccessResponseDTO {
   @ApiProperty({ description: ' Profile Object', type: [UserProfileDTO] })
   data: UserProfileDTO[];
 }
-

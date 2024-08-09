@@ -25,33 +25,38 @@ export class UserService {
         password: true,
       },
     });
-
-    
   }
-  async profileList(requestor: string, search: string, limit: number = 10, page: number = 1) {
-    const query = this.userRepository.createQueryBuilder('user')
-    .where('user.id != :requestor', { requestor }) // Exclude the requestor from the results
-    .orderBy('user.created_at', 'DESC'); // Order by creation date in descending order
-    
+  async profileList(
+    requestor: string,
+    search: string,
+    limit: number = 10,
+    page: number = 1,
+  ) {
+    const query = this.userRepository
+      .createQueryBuilder('user')
+      .where('user.id != :requestor', { requestor }) // Exclude the requestor from the results
+      .orderBy('user.created_at', 'DESC'); // Order by creation date in descending order
+
     if (search && search.trim()) {
       query.andWhere(
         new Brackets((qb) => {
-          qb.where('user.name ILIKE :search', { search: `%${search}%` })
-            .orWhere('user.email ILIKE :search', { search: `%${search}%` });
-        })
+          qb.where('user.name ILIKE :search', {
+            search: `%${search}%`,
+          }).orWhere('user.email ILIKE :search', { search: `%${search}%` });
+        }),
       );
     }
 
     paginate(query, page, limit);
 
-  const [results, total] = await query.getManyAndCount(); // Get results and total count
+    const [results, total] = await query.getManyAndCount(); // Get results and total count
 
-  const pagination = calculatePagination(total, page, limit);
+    const pagination = calculatePagination(total, page, limit);
 
-  return {
-    data: results,
-    ...pagination,
-  };
+    return {
+      data: results,
+      ...pagination,
+    };
   }
 
   async getProfile(requestorId: string) {
