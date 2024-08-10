@@ -19,7 +19,7 @@ export const typeOrmConfig = (
     join(__dirname, '..', 'entities', '**', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
   ],
   subscribers: [
-    join(__dirname, '..', 'subscribers', '**', '*.subscribe.{ts,js}'), 
+    join(__dirname, '..', 'subscribers', '**', '*.subscribe.{ts,js}'),
   ],
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
 

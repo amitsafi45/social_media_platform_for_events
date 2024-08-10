@@ -31,7 +31,7 @@ const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
 @ApiBearerAuth('access-token') // Applies Bearer token security to all endpoints in this controller
 export class MediaController {
   constructor(private readonly fileManagementService: FileManagementService) {
-    this.fileManagementService.ensureFolderInsidePublicFolderExists('temp')
+    this.fileManagementService.ensureFolderInsidePublicFolderExists('temp');
   }
 
   @Post('upload')
@@ -100,12 +100,12 @@ export class MediaController {
     }
 
     const dirPath = path.join(process.cwd(), 'public', 'temp'); // Directory path
-    console.log(file.originalname)
+    console.log(file.originalname);
     const fileName = this.generateFileName(file.originalname); // Replace with the actual file name or dynamically generate it
     const filePath = path.join(dirPath, fileName); // Full file path
-    
+
     try {
-      await fs.promises.writeFile(filePath, file.buffer)
+      await fs.promises.writeFile(filePath, file.buffer);
       console.log('File written successfully');
     } catch (err) {
       if (err.code === 'ENOENT') {
@@ -116,12 +116,12 @@ export class MediaController {
     }
 
     return {
-      name:fileName,
+      name: fileName,
     };
   }
 
   private generateFileName(originalName: string): string {
-    const date=new Date().toISOString().split('T')[0]; 
+    const date = new Date().toISOString().split('T')[0];
     const randomString = randomBytes(3).toString('hex');
     return `${date}__${randomString}__${originalName}`;
   }

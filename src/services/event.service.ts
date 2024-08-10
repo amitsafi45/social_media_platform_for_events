@@ -13,12 +13,20 @@ export class EventService {
     private readonly EventTransactionRepository: EventTransactionRepository,
     @InjectRepository(EventEntity)
     private readonly eventRepo: Repository<EventEntity>,
-    private readonly fileManageMentService:FileManagementService
+    private readonly fileManageMentService: FileManagementService,
   ) {}
-  async create(data: EventDTO,email:string) {
-    if(data.media.type===MediaType.Event && data.media.data.length>0){
-      data.media.data.every((element)=>this.fileManageMentService.checkFileExistOrNot(element.name))
-      data.media.data.map((element)=>this.fileManageMentService.moveFileFromTempToUpload(MediaType.Event,element.name,email.split('@')[0]))
+  async create(data: EventDTO, email: string) {
+    if (data.media.type === MediaType.Event && data.media.data.length > 0) {
+      data.media.data.every((element) =>
+        this.fileManageMentService.checkFileExistOrNot(element.name),
+      );
+      data.media.data.map((element) =>
+        this.fileManageMentService.moveFileFromTempToUpload(
+          MediaType.Event,
+          element.name,
+          email.split('@')[0],
+        ),
+      );
     }
 
     return await this.EventTransactionRepository.createEventWithMedia(data);

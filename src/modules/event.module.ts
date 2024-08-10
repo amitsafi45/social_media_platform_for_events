@@ -19,7 +19,12 @@ import { FileManagementService } from '@services/fileManagement.service';
     ]),
   ],
   controllers: [EventController],
-  providers: [EventService, EventTransactionRepository, EventEntitySubscriber,FileManagementService],
+  providers: [
+    EventService,
+    EventTransactionRepository,
+    EventEntitySubscriber,
+    FileManagementService,
+  ],
 })
 export class EventModule {
   configure(consumer: MiddlewareConsumer) {

@@ -54,7 +54,7 @@ export class EventController {
     @Req() req,
   ): Promise<SuccessResponseDTO> {
     body.creator = req.user.sub;
-    await this.eventService.create(body,req.user.email);
+    await this.eventService.create(body, req.user.email);
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
