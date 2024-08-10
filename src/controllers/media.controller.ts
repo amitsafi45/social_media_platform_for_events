@@ -31,7 +31,7 @@ const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
 @ApiBearerAuth('access-token') // Applies Bearer token security to all endpoints in this controller
 export class MediaController {
   constructor(private readonly fileManagementService: FileManagementService) {
-    this.fileManagementService.ensurePublicTempExists()
+    this.fileManagementService.ensureFolderInsidePublicFolderExists('temp')
   }
 
   @Post('upload')

@@ -8,6 +8,7 @@ import { EventTransactionRepository } from '@repository/event.repository';
 import { AuthenticationMiddleware } from '@middlewares/authentication.middleware';
 import { EventEntitySubscriber } from 'subscribers/event.subscribe';
 import { NotificationEntity } from '@entities/notification.entity';
+import { FileManagementService } from '@services/fileManagement.service';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { NotificationEntity } from '@entities/notification.entity';
     ]),
   ],
   controllers: [EventController],
-  providers: [EventService, EventTransactionRepository, EventEntitySubscriber],
+  providers: [EventService, EventTransactionRepository, EventEntitySubscriber,FileManagementService],
 })
 export class EventModule {
   configure(consumer: MiddlewareConsumer) {

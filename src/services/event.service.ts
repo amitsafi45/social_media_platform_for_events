@@ -4,16 +4,23 @@ import { EventTransactionRepository } from '@repository/event.repository';
 import { Brackets, Not, Repository } from 'typeorm';
 import { EventEntity } from '@entities/event.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EventCategory } from '@constants/enum';
+import { EventCategory, MediaType } from '@constants/enum';
 import { calculatePagination, paginate } from '@utils/pagination.util';
+import { FileManagementService } from './fileManagement.service';
 @Injectable()
 export class EventService {
   constructor(
     private readonly EventTransactionRepository: EventTransactionRepository,
     @InjectRepository(EventEntity)
     private readonly eventRepo: Repository<EventEntity>,
+    private readonly fileManageMentService:FileManagementService
   ) {}
-  async create(data: EventDTO) {
+  async create(data: EventDTO,email:string) {
+    if(data.media.type===MediaType.Event && data.media.data.length>0){
+      data.media.data.every((element)=>this.fileManageMentService.checkFileExistOrNot(element.name))
+      data.media.data.map((element)=>this.fileManageMentService.moveFileFromTempToUpload(MediaType.Event,element.name,email.split('@')[0]))
+    }
+
     return await this.EventTransactionRepository.createEventWithMedia(data);
   }
 
