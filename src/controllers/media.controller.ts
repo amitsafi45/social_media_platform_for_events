@@ -21,7 +21,7 @@ import {
   ApiBody,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { join } from 'path';
+import * as path from 'path';
 
 const IMAGE_SIZE_IN_BYTES = 5 * 1024 * 1024; // 5 MB
 const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -30,7 +30,9 @@ const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
 @ApiTags('media')
 @ApiBearerAuth('access-token') // Applies Bearer token security to all endpoints in this controller
 export class MediaController {
-  constructor(private readonly fileManagementService: FileManagementService) {}
+  constructor(private readonly fileManagementService: FileManagementService) {
+    this.fileManagementService.ensurePublicTempExists()
+  }
 
   @Post('upload')
   @UseInterceptors(AnyFilesInterceptor())
@@ -97,19 +99,29 @@ export class MediaController {
       );
     }
 
-    const fileName = this.generateFileName(file.originalname);
-
-    const tempFolderPath = this.fileManagementService.getTempFolderPath();
-    const tempFilePath = join(tempFolderPath, fileName);
-    // await fs.promises.writeFile(tempFilePath, file.buffer);
+    const dirPath = path.join(process.cwd(), 'public', 'temp'); // Directory path
+    console.log(file.originalname)
+    const fileName = this.generateFileName(file.originalname); // Replace with the actual file name or dynamically generate it
+    const filePath = path.join(dirPath, fileName); // Full file path
+    
+    try {
+      await fs.promises.writeFile(filePath, file.buffer)
+      console.log('File written successfully');
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        console.error(`File or directory not found: ${filePath}`);
+      } else {
+        console.error(`An error occurred: ${err.message}`);
+      }
+    }
 
     return {
-      name: fileName,
+      name:fileName,
     };
   }
 
   private generateFileName(originalName: string): string {
-    const date = new Date().toISOString();
+    const date=new Date().toISOString().split('T')[0]; 
     const randomString = randomBytes(3).toString('hex');
     return `${date}__${randomString}__${originalName}`;
   }
