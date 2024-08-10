@@ -173,7 +173,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: ' Fetch Notification List Successfully',
-    type: ProfileResponseDTO,
+    type: NotificationResponseDTO,
   })
   async notificationList(@Req() req): Promise<NotificationResponseDTO> {
     const data = await this.notificationService.getNotificationByReceiverId(
