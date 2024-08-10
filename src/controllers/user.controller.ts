@@ -188,13 +188,16 @@ export class UserController {
   }
 
   @Get('/list')
+  @ApiOperation({
+    summary: 'Get the user profile list',
+  })
   @ApiQuery({ name: 'search', type: String, required: false })
   @ApiQuery({ name: 'limit', type: Number, required: false, example: 10 })
   @ApiQuery({ name: 'page', type: Number, required: false, example: 1 })
   @ApiResponse({
     status: 201,
     description: 'Profile List',
-    // type: EventListResponseDTO,
+     type: ProfileListResponseDTO,
   })
   async getProfileList(
     @Req() req,
