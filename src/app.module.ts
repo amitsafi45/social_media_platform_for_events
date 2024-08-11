@@ -13,8 +13,14 @@ import { UserModule } from '@modules/user.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggingMiddleware } from '@middlewares/logging.middleware';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..','public','uploads'), // Adjust path to public/uploads
+      exclude: ['/social-platform/api/v1'], 
+    }),
     ConfigModule.forRoot({
       envFilePath: '.env',
       ignoreEnvFile: false,
@@ -59,3 +65,10 @@ export class AppModule implements MediaModule {
     consumer.apply(LoggingMiddleware).forRoutes('*'); // Apply middleware globally or to specific routes
   }
 }
+
+
+
+
+
+
+

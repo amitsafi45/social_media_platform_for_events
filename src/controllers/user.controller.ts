@@ -149,7 +149,7 @@ export class UserController {
 
   @Get()
   @ApiOperation({
-    summary: 'Get the user profile along with followers and following list',
+    summary: 'Get your own profile along with followers and following list',
   })
   @ApiResponse({
     status: HttpStatus.CREATED,

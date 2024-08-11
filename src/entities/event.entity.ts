@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { EventCategory } from '../constants/enum';
+import { CharacterLength, EventCategory } from '../constants/enum';
 import { UserEntity } from './user.entity';
 import { CommentEntity } from './comment.entity';
 import { EventLikeEntity } from './eventLike.entity';
@@ -8,10 +8,10 @@ import { EventMediaEntity } from './eventMedia.entity';
 
 @Entity('event')
 export class EventEntity extends BaseEntity {
-  @Column({ name: 'title', type: 'varchar', length: 100 })
+  @Column({ name: 'title', type: 'varchar', length: CharacterLength.ONE_HUNDRED })
   title: string;
 
-  @Column({ name: 'description', type: 'varchar', length: 500 })
+  @Column({ name: 'description', type: 'varchar', length: CharacterLength.FIVE_HUNDRED })
   description: string;
 
   @Column({ name: 'date', type: 'date', nullable: true })

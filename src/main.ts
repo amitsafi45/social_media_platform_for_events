@@ -6,15 +6,21 @@ import { ValidationPipe } from '@nestjs/common';
 import { errorMessageExtract } from '@utils/errorMessageExtract';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { join } from 'path';
 async function bootstrap() {
+
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
+
   app.use(
     helmet({
       xPoweredBy: false, // Hides the X-Powered-By header or sets it to a custom value
     }),
   );
+  app.enableCors({
+    origin: '*',
+  });
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new GlobalErrorHandlingFilter(httpAdapter));
   app.setGlobalPrefix('social-platform/api/v1');
@@ -43,4 +49,9 @@ async function bootstrap() {
     console.log(`Server Listening At Port ${PORT_NUMBER}`);
   });
 }
-bootstrap();
+try{
+
+  bootstrap();
+}catch(error){
+  console.log(error,"JKKKK")
+}

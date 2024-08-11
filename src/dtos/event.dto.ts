@@ -151,3 +151,76 @@ export class PaginatedEventResponseDto extends SuccessResponseDTO {
 }
 
 export class EventListResponseDTO extends PaginatedEventResponseDto {}
+export class EventByCreatorIDAndEventId{
+   @ApiProperty(
+  {
+    description:"Event ID"
+  }
+   )
+   event:string
+
+   @ApiProperty({
+    description:" Event Creator ID"
+   })
+   creator:string
+}
+
+export class EventLikeDTO {
+  @ApiProperty({
+    description: 'Like ID',
+    example: 'abf4191f-9d09-45af-925f-96987ac9914d',
+  })
+  id: string;
+
+  @ApiProperty({
+    description: 'Created timestamp of the like',
+    example: '2024-08-11T02:40:52.793Z',
+  })
+  createdAt: string;
+
+  @ApiProperty({
+    description: 'User who liked the event',
+    type: UserProfileDTO,
+  })
+  user: UserProfileDTO;
+}
+export class EventMediaDTO {
+  @ApiProperty({
+    description: 'Media ID',
+    example: '52e786e2-18d5-4baf-81c0-1d91848ac1cb',
+  })
+  id: string;
+
+  @ApiProperty({
+    description: 'Path to the media file',
+    example: 'localhost:4000/john.doe1/event/2024-08-11__b492bc__Screenshot.png',
+  })
+  path: string;
+}
+
+
+export class EventDetailResponseDTO {
+  @ApiProperty({
+    description: 'Event details',
+    type: EventDTO,
+  })
+  event: EventDTO;
+
+  @ApiProperty({
+    description: 'Comments on the event',
+    type: [CommentDTO],
+  })
+  comments: CommentDTO[];
+
+  @ApiProperty({
+    description: 'Likes on the event',
+    type: [EventLikeDTO],
+  })
+  eventLikes: EventLikeDTO[];
+
+  @ApiProperty({
+    description: 'Media associated with the event',
+    type: [EventMediaDTO],
+  })
+  eventMedia: EventMediaDTO[];
+}

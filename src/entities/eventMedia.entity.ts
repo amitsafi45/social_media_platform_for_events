@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { AfterLoad, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '@entities/base.entity';
 import { EventEntity } from '@entities/event.entity';
 import { CharacterLength } from '@constants/enum';
@@ -11,4 +11,6 @@ export class EventMediaEntity extends BaseEntity {
   @ManyToOne(() => EventEntity, (event) => event.eventMedia)
   @JoinColumn({ name: 'event_id' })
   event: EventEntity | string;
+
+
 }

@@ -9,6 +9,8 @@ import { AuthenticationMiddleware } from '@middlewares/authentication.middleware
 import { EventEntitySubscriber } from 'subscribers/event.subscribe';
 import { NotificationEntity } from '@entities/notification.entity';
 import { FileManagementService } from '@services/fileManagement.service';
+import { FollowUserService } from '@services/followUser.service';
+import { FollowUserEntity } from '@entities/followUser.entity';
 
 @Module({
   imports: [
@@ -16,6 +18,7 @@ import { FileManagementService } from '@services/fileManagement.service';
       EventEntity,
       EventMediaEntity,
       NotificationEntity,
+      FollowUserEntity
     ]),
   ],
   controllers: [EventController],
@@ -24,6 +27,7 @@ import { FileManagementService } from '@services/fileManagement.service';
     EventTransactionRepository,
     EventEntitySubscriber,
     FileManagementService,
+    FollowUserService
   ],
 })
 export class EventModule {
@@ -33,6 +37,7 @@ export class EventModule {
       .forRoutes(
         { path: 'event', method: RequestMethod.POST },
         { path: 'event', method: RequestMethod.GET },
+        { path: 'event/detail', method: RequestMethod.GET },
       );
   }
 }
