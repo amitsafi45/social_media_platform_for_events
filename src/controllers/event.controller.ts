@@ -32,6 +32,8 @@ import dataSource from '@configs/dataSource.config';
 import { EventCategory } from '@constants/enum';
 import { FollowUserService } from '@services/followUser.service';
 import { ConfigService } from '@nestjs/config';
+import { EventEntity } from '@entities/event.entity';
+import { UserEntity } from '@entities/user.entity';
 
 @ApiTags('Event')
 @ApiBearerAuth('access-token')
@@ -128,26 +130,24 @@ export class EventController {
     @Query() body: EventByCreatorIDAndEventId,
     @Req() req,
   ) {
-    console.log('kkkk');
     const verify = await this.followUserService.isFollowed(
       req.user.sub,
       body.creator,
     );
-    console.log(verify, 'sdfghjkl');
     if (!verify) {
       throw new HttpException(
         'You have to first follow creator profile to see detail of event',
         HttpStatus.BAD_REQUEST,
       );
     }
-    const event = await this.eventService.getEventById(body.event);
+    const event:EventEntity = await this.eventService.getEventById(body.event);
+    const creator= event.creator as UserEntity
     event.eventMedia.map((element) => {
       element.path = `localhost:${this.configService.get('PORT')}/${
-        req.user.email.split('@')[0]
+        creator.email.split('@')[0]
       }/event/${element.path}`;
       return element;
     });
-    console.log(event, 'cc');
     return event;
   }
 }

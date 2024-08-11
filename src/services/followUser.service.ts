@@ -26,8 +26,7 @@ export class FollowUserService {
   }
 
   async isFollowed(followingId: string, followerId: string) {
-    console.log('PLO');
-    const d = await this.followUserRepo.findOne({
+    return await this.followUserRepo.findOne({
       where: {
         followingUser: {
           id: followingId,
@@ -37,7 +36,5 @@ export class FollowUserService {
         },
       },
     });
-    console.log(d);
-    return d;
   }
 }
