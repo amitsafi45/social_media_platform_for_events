@@ -140,8 +140,8 @@ export class EventController {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const event:EventEntity = await this.eventService.getEventById(body.event);
-    const creator= event.creator as UserEntity
+    const event: EventEntity = await this.eventService.getEventById(body.event);
+    const creator = event.creator as UserEntity;
     event.eventMedia.map((element) => {
       element.path = `localhost:${this.configService.get('PORT')}/${
         creator.email.split('@')[0]

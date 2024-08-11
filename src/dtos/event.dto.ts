@@ -162,7 +162,7 @@ export class EventByCreatorIDAndEventId {
   })
   creator: string;
 }
-EventDTO
+EventDTO;
 export class EventLikeDTO {
   @ApiProperty({
     description: 'Like ID',
@@ -196,16 +196,18 @@ export class EventMediaDTO {
   })
   path: string;
 }
-export class EventDetailDTO extends OmitType(EventDTO, ['media','creator'] as const) {
+export class EventDetailDTO extends OmitType(EventDTO, [
+  'media',
+  'creator',
+] as const) {
   @ApiProperty({
     description: 'creator details',
     type: UserProfileDTO,
   })
-  creator:UserProfileDTO
+  creator: UserProfileDTO;
 }
 
-export class EventDetailResponseDTO  {
-  
+export class EventDetailResponseDTO {
   @ApiProperty({
     description: 'Event details',
     type: EventDetailDTO,
