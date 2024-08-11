@@ -73,6 +73,4 @@ export class UserService {
       .getOneOrFail();
     return userProfile;
   }
-
-
 }

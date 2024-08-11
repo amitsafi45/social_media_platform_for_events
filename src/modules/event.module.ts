@@ -18,7 +18,7 @@ import { FollowUserEntity } from '@entities/followUser.entity';
       EventEntity,
       EventMediaEntity,
       NotificationEntity,
-      FollowUserEntity
+      FollowUserEntity,
     ]),
   ],
   controllers: [EventController],
@@ -27,7 +27,7 @@ import { FollowUserEntity } from '@entities/followUser.entity';
     EventTransactionRepository,
     EventEntitySubscriber,
     FileManagementService,
-    FollowUserService
+    FollowUserService,
   ],
 })
 export class EventModule {

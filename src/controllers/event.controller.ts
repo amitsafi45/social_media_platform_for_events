@@ -18,7 +18,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { EventByCreatorIDAndEventId, EventDetailResponseDTO, EventDTO, EventListDTO, EventListResponseDTO } from '@dtos/event.dto';
+import {
+  EventByCreatorIDAndEventId,
+  EventDetailResponseDTO,
+  EventDTO,
+  EventListDTO,
+  EventListResponseDTO,
+} from '@dtos/event.dto';
 import { EventService } from '@services/event.service';
 import { SuccessResponseDTO } from '@dtos/response.dto';
 import { TransactionInterceptor } from '@utils/transaction.interceptor';
@@ -31,7 +37,11 @@ import { ConfigService } from '@nestjs/config';
 @ApiBearerAuth('access-token')
 @Controller('event')
 export class EventController {
-  constructor(private  eventService: EventService,private  followUserService:FollowUserService,private configService:ConfigService ) {}
+  constructor(
+    private eventService: EventService,
+    private followUserService: FollowUserService,
+    private configService: ConfigService,
+  ) {}
   @Post('/')
   @ApiOperation({ summary: 'create a new Event' })
   @ApiBody({
@@ -101,7 +111,9 @@ export class EventController {
   }
 
   @Get('detail')
-  @ApiOperation({ summary: 'Retrieve event details by event ID and creator ID' })
+  @ApiOperation({
+    summary: 'Retrieve event details by event ID and creator ID',
+  })
   @ApiResponse({
     status: 200,
     description: 'Retrieve event details by event ID and creator ID',
@@ -109,22 +121,33 @@ export class EventController {
   })
   @ApiResponse({
     status: 400,
-    description: 'User needs to follow the creator profile to view event details',
+    description:
+      'User needs to follow the creator profile to view event details',
   })
-  async getEventDetailByID(@Query()body:EventByCreatorIDAndEventId,@Req()req){
-    console.log("kkkk")
-    const verify= await this.followUserService.isFollowed(req.user.sub,body.creator)
-    console.log(verify,"sdfghjkl")
-    if(!verify){
-      throw new HttpException('You have to first follow creator profile to see detail of event',HttpStatus.BAD_REQUEST)
+  async getEventDetailByID(
+    @Query() body: EventByCreatorIDAndEventId,
+    @Req() req,
+  ) {
+    console.log('kkkk');
+    const verify = await this.followUserService.isFollowed(
+      req.user.sub,
+      body.creator,
+    );
+    console.log(verify, 'sdfghjkl');
+    if (!verify) {
+      throw new HttpException(
+        'You have to first follow creator profile to see detail of event',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-      const event= await this.eventService.getEventById(body.event)
-      event.eventMedia.map((element)=>{
-        element.path= `localhost:${this.configService.get('PORT')}/${req.user.email.split('@')[0]}/event/${element.path}`
-      return element
-      })
-      console.log(event,"cc")
-      return event
-      
-  } 
+    const event = await this.eventService.getEventById(body.event);
+    event.eventMedia.map((element) => {
+      element.path = `localhost:${this.configService.get('PORT')}/${
+        req.user.email.split('@')[0]
+      }/event/${element.path}`;
+      return element;
+    });
+    console.log(event, 'cc');
+    return event;
+  }
 }

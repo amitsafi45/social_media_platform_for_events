@@ -16,7 +16,7 @@ export class EventService {
     private readonly fileManageMentService: FileManagementService,
   ) {}
   async create(data: EventDTO, email: string) {
-    if (data.media&&data.media.data.length > 0) {
+    if (data.media && data.media.data.length > 0) {
       data.media.data.every((element) =>
         this.fileManageMentService.checkFileExistOrNot(element.name),
       );
@@ -85,23 +85,21 @@ export class EventService {
     };
   }
 
-
-  async getEventById(id:string){
-
+  async getEventById(id: string) {
     return await this.eventRepo.findOne({
-      where:{
-        id:id
+      where: {
+        id: id,
       },
-      relations:{
-        creator:true,
-        comments:{
-          commentator:true
+      relations: {
+        creator: true,
+        comments: {
+          commentator: true,
         },
-        eventLikes:{
-          user:true
+        eventLikes: {
+          user: true,
         },
-        eventMedia:true
-      }
-    })
+        eventMedia: true,
+      },
+    });
   }
 }

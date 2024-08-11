@@ -197,7 +197,7 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'Profile List',
-     type: ProfileListResponseDTO,
+    type: ProfileListResponseDTO,
   })
   async getProfileList(
     @Req() req,

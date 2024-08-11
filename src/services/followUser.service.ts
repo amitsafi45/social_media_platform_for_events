@@ -25,19 +25,19 @@ export class FollowUserService {
     });
   }
 
-  async isFollowed(followingId:string,followerId:string){
-    console.log("PLO")
-    const d= await this.followUserRepo.findOne({
-      where:{
-        followingUser:{
-          id:followingId
+  async isFollowed(followingId: string, followerId: string) {
+    console.log('PLO');
+    const d = await this.followUserRepo.findOne({
+      where: {
+        followingUser: {
+          id: followingId,
         },
-        followerUser:{
-          id:followerId
-        }
-      }
-    })
-    console.log(d)
-    return d
- }
+        followerUser: {
+          id: followerId,
+        },
+      },
+    });
+    console.log(d);
+    return d;
+  }
 }

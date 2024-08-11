@@ -18,8 +18,8 @@ import { join } from 'path';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..','public','uploads'), // Adjust path to public/uploads
-      exclude: ['/social-platform/api/v1'], 
+      rootPath: join(__dirname, '..', 'public', 'uploads'), // Adjust path to public/uploads
+      exclude: ['/social-platform/api/v1'],
     }),
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -65,10 +65,3 @@ export class AppModule implements MediaModule {
     consumer.apply(LoggingMiddleware).forRoutes('*'); // Apply middleware globally or to specific routes
   }
 }
-
-
-
-
-
-
-

@@ -89,7 +89,7 @@ export class UserProfileDTO {
   email: string;
 }
 
-class IdAndDateDTO{
+class IdAndDateDTO {
   @ApiProperty({ description: 'Unique identifier of the follow relationship' })
   id: string;
 
@@ -100,19 +100,13 @@ class IdAndDateDTO{
 }
 
 class FollowUserDetailsDTO extends IdAndDateDTO {
-  
-
   @ApiProperty({ description: 'Details of the follower user' })
   followerUser?: UserProfileDTO;
-
-  
 }
 
-class FollowingUserDetailsDTO extends IdAndDateDTO{
-
+class FollowingUserDetailsDTO extends IdAndDateDTO {
   @ApiProperty({ description: 'Details of the following user' })
   followingUser?: UserProfileDTO;
-
 }
 
 export class UserProfileResponseDTO {

@@ -151,18 +151,16 @@ export class PaginatedEventResponseDto extends SuccessResponseDTO {
 }
 
 export class EventListResponseDTO extends PaginatedEventResponseDto {}
-export class EventByCreatorIDAndEventId{
-   @ApiProperty(
-  {
-    description:"Event ID"
-  }
-   )
-   event:string
+export class EventByCreatorIDAndEventId {
+  @ApiProperty({
+    description: 'Event ID',
+  })
+  event: string;
 
-   @ApiProperty({
-    description:" Event Creator ID"
-   })
-   creator:string
+  @ApiProperty({
+    description: ' Event Creator ID',
+  })
+  creator: string;
 }
 
 export class EventLikeDTO {
@@ -193,11 +191,11 @@ export class EventMediaDTO {
 
   @ApiProperty({
     description: 'Path to the media file',
-    example: 'localhost:4000/john.doe1/event/2024-08-11__b492bc__Screenshot.png',
+    example:
+      'localhost:4000/john.doe1/event/2024-08-11__b492bc__Screenshot.png',
   })
   path: string;
 }
-
 
 export class EventDetailResponseDTO {
   @ApiProperty({

@@ -8,7 +8,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { join } from 'path';
 async function bootstrap() {
-
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
   });
@@ -49,9 +48,8 @@ async function bootstrap() {
     console.log(`Server Listening At Port ${PORT_NUMBER}`);
   });
 }
-try{
-
+try {
   bootstrap();
-}catch(error){
-  console.log(error,"JKKKK")
+} catch (error) {
+  console.log(error, 'JKKKK');
 }

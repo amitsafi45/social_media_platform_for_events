@@ -8,10 +8,18 @@ import { EventMediaEntity } from './eventMedia.entity';
 
 @Entity('event')
 export class EventEntity extends BaseEntity {
-  @Column({ name: 'title', type: 'varchar', length: CharacterLength.ONE_HUNDRED })
+  @Column({
+    name: 'title',
+    type: 'varchar',
+    length: CharacterLength.ONE_HUNDRED,
+  })
   title: string;
 
-  @Column({ name: 'description', type: 'varchar', length: CharacterLength.FIVE_HUNDRED })
+  @Column({
+    name: 'description',
+    type: 'varchar',
+    length: CharacterLength.FIVE_HUNDRED,
+  })
   description: string;
 
   @Column({ name: 'date', type: 'date', nullable: true })
