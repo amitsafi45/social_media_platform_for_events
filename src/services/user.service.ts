@@ -34,9 +34,18 @@ export class UserService {
   ) {
     const query = this.userRepository
       .createQueryBuilder('user')
-      .where('user.id != :requestor', { requestor }) // Exclude the requestor from the results
-      .orderBy('user.created_at', 'DESC'); // Order by creation date in descending order
-
+      .leftJoinAndSelect('user.following', 'following')
+      .leftJoinAndSelect('following.followerUser', 'followingUser')
+      .leftJoinAndSelect('user.follower', 'followers')
+      .leftJoinAndSelect('followers.followingUser', 'followerUser')
+      .select([
+        'user.id as id',
+        'user.name as name',
+        'user.email as email',
+        `CASE WHEN followingUser.id = :requestor THEN true ELSE false END AS isFollower`,
+        `CASE WHEN followerUser.id = :requestor THEN true ELSE false END AS isFollowing`,
+      ])
+      .where('user.id != :requestor', { requestor }) 
     if (search && search.trim()) {
       query.andWhere(
         new Brackets((qb) => {
@@ -46,11 +55,8 @@ export class UserService {
         }),
       );
     }
-
-    paginate(query, page, limit);
-
-    const [results, total] = await query.getManyAndCount(); // Get results and total count
-
+    const results = await query.getRawMany(); 
+    const total=results.length
     const pagination = calculatePagination(total, page, limit);
 
     return {
@@ -73,4 +79,5 @@ export class UserService {
       .getOneOrFail();
     return userProfile;
   }
+
 }

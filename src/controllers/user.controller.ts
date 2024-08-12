@@ -21,6 +21,7 @@ import { SuccessResponseDTO } from '@dtos/response.dto';
 import {
   FollowUserDTO,
   LikeDTO,
+  ModifyProfileResposeDTO,
   ProfileListResponseDTO,
   ProfileResponseDTO,
   UserProfileDTO,
@@ -36,6 +37,8 @@ import {
   NotificationResponseDTO,
 } from '@dtos/notification.dto';
 import { NotificationEntity } from '@entities/notification.entity';
+import { UserEntity } from '@entities/user.entity';
+import { FollowUserEntity } from '@entities/followUser.entity';
 
 @ApiTags('User')
 @ApiBearerAuth('access-token')
@@ -204,19 +207,24 @@ export class UserController {
     @Query('search') search: string,
     @Query('limit') limit: number = 10,
     @Query('page') page: number = 1,
-  ): Promise<ProfileListResponseDTO> {
+  ) {
+
+    const requestorId = req.user.sub;
     const { data, ...pagination } = await this.userService.profileList(
-      req.user.sub,
+      requestorId,
       search,
       limit,
       page,
     );
+    
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
       message: ' Fetch profile list Successfully',
-      data: data as UserProfileDTO[],
+      data:data as ModifyProfileResposeDTO[],
       ...pagination,
     } as ProfileListResponseDTO;
   }
+
+
 }

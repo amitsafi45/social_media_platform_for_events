@@ -50,13 +50,13 @@ export class UserEntity extends BaseEntity {
   profileMedia: ProfileMediaEntity;
 
   @OneToMany(() => FollowUserEntity, (follow) => follow.followingUser)
-  following: FollowUserEntity[];
+  following: FollowUserEntity[] | string[];
 
   @OneToMany(() => NotificationEntity, (notification) => notification.sender)
   sentNotifications: NotificationEntity[];
 
   @OneToMany(() => NotificationEntity, (notification) => notification.receiver)
-  receivedNotifications: NotificationEntity[];
+  receivedNotifications: NotificationEntity[] | string[];
 
   @OneToMany(() => FollowUserEntity, (follow) => follow.followerUser)
   follower: FollowUserEntity[];

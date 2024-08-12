@@ -78,7 +78,7 @@ export class EventController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get List Of Event' })
+  @ApiOperation({ summary: 'Get List Of Event,,except requestor event' })
   @ApiQuery({ name: 'category', enum: EventCategory, required: false })
   @ApiQuery({ name: 'search', type: String, required: false })
   @ApiQuery({ name: 'limit', type: Number, required: false, example: 10 })

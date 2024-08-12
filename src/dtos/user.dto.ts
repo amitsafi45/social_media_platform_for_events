@@ -87,6 +87,21 @@ export class UserProfileDTO {
 
   @ApiProperty({ description: 'Email address of the user' })
   email: string;
+} 
+
+export class ModifyProfileResposeDTO extends UserProfileDTO{
+  @ApiProperty({
+    description: 'Indicates if the user is a follower of the requestor. True if the user follows the requestor, otherwise false.',
+    example: true,
+  })
+  isFollower: boolean;
+
+  @ApiProperty({
+    description: 'Indicates if the user is followed by the requestor. True if the requestor follows the user, otherwise false.',
+    example: false,
+  })
+  isFollowing: boolean;
+ 
 }
 
 class IdAndDateDTO {
@@ -138,6 +153,6 @@ export class ProfileResponseDTO extends SuccessResponseDTO {
 }
 
 export class ProfileListResponseDTO extends SuccessResponseDTO {
-  @ApiProperty({ description: ' Profile Object', type: [UserProfileDTO] })
-  data: UserProfileDTO[];
+  @ApiProperty({ description: ' Profile Object', type: [ModifyProfileResposeDTO] })
+  data: ModifyProfileResposeDTO[];
 }

@@ -22,7 +22,6 @@ export const typeOrmConfig = (
     join(__dirname, '..', 'subscribers', '**', '*.subscribe.{ts,js}'),
   ],
   synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
-
   logging: configService.get<boolean>(
     'DB_LOGGING',
     configService.get('ENVIRONMENT') === Environment.Development ? true : false,

@@ -2,7 +2,7 @@ import { FollowUserDTO } from '@dtos/user.dto';
 import { FollowUserEntity } from '@entities/followUser.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class FollowUserService {
@@ -37,4 +37,19 @@ export class FollowUserService {
       },
     });
   }
+
+  async getFollowRecords(followingId: string, followerId: string[]){
+    
+    return await this.followUserRepo.find({
+      where: {
+        followingUser: {
+          id: followingId,
+        },
+        followerUser: {
+          id: In(followerId),
+        },
+      },
+    });
+  }
+
 }
