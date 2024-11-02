@@ -21,3 +21,9 @@ export enum CharacterLength {
   TWO_HUNDRED_FIFTY_FIVE = 255,
   FIVE_HUNDRED = 500,
 }
+
+export enum Role{
+  USER='User',
+  ADMIN='Admin',
+  SUPER_ADMIN='Super Admin'
+}

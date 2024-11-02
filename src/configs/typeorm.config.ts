@@ -15,13 +15,14 @@ export const typeOrmConfig = (
   username: configService.get<string>('DB_USERNAME'),
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
+  // dropSchema:true,
   entities: [
     join(__dirname, '..', 'entities', '**', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
   ],
   subscribers: [
     join(__dirname, '..', 'subscribers', '**', '*.subscribe.{ts,js}'),
   ],
-  synchronize: configService.get<boolean>('DB_SYNCHRONIZE', false),
+  synchronize: configService.get<boolean>('DB_SYNCHRONIZE',true),
   logging: configService.get<boolean>(
     'DB_LOGGING',
     configService.get('ENVIRONMENT') === Environment.Development ? true : false,

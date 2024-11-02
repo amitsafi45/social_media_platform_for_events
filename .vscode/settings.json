@@ -1,5 +1,13 @@
 {
     "cSpell.words": [
         "unfollow"
-    ]
+    ],
+    "workbench.view.alwaysShowHeaderActions": true,
+    "breadcrumbs.enabled": true,
+    "terminal.integrated.accessibleViewPreserveCursorPosition": false,
+    "terminal.integrated.accessibleViewFocusOnCommandExecution": false,
+    "terminal.integrated.cursorWidth": 1,
+    "terminal.integrated.defaultLocation": "view",
+    "terminal.integrated.fontFamily": "",
+    "terminal.integrated.fontSize": 11
 }

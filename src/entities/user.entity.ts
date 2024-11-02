@@ -12,7 +12,7 @@ import { TokenEntity } from '@entities/token.entity';
 import { ProfileMediaEntity } from '@entities/profileMedia.entity';
 import { FollowUserEntity } from '@entities/followUser.entity';
 import { BaseEntity } from '@entities/base.entity';
-import { CharacterLength } from '@constants/enum';
+import { CharacterLength, Role } from '@constants/enum';
 import { NotificationEntity } from './notification.entity';
 
 @Entity('user')
@@ -33,6 +33,13 @@ export class UserEntity extends BaseEntity {
     select: false,
   }) // Changed to varchar for hashed password
   password: string;
+  
+  @Column({
+    type:'enum',
+    default:Role.USER,
+    enum:Role
+  })
+  role:Role
 
   @OneToMany(() => EventEntity, (event) => event.creator)
   events: EventEntity[];
