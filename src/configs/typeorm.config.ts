@@ -16,6 +16,7 @@ export const typeOrmConfig = (
   password: configService.get<string>('DB_PASSWORD'),
   database: configService.get<string>('DB_DATABASE'),
   // dropSchema:true,
+  // dropSchema:true,
   entities: [
     join(__dirname, '..', 'entities', '**', '*.entity.{ts,js}'), // Handles both .ts and .js files in all subdirectories
   ],

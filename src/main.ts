@@ -1,3 +1,4 @@
+import { SpelunkerModule } from 'nestjs-spelunker'; 
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
@@ -10,6 +11,7 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'warn'],
+
   });
 
   app.use(
@@ -44,6 +46,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+    console.log(SpelunkerModule.explore(app));
   await app.listen(PORT_NUMBER, () => {
     console.log(`Server Listening At Port ${PORT_NUMBER}`);
   });
